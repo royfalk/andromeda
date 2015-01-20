@@ -15,11 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import il.co.falk.andromeda.game.Colony;
-import il.co.falk.andromeda.game.ColonyShip;
-import il.co.falk.andromeda.game.Destroyer;
-import il.co.falk.andromeda.game.MissileBase;
 import il.co.falk.andromeda.game.Planet;
-import il.co.falk.andromeda.game.ProductFactory;
+import il.co.falk.andromeda.game.UnitFactory;
 import il.co.falk.andromeda.game.Unit;
 import il.co.falk.andromeda.game.Universe;
 
@@ -33,6 +30,9 @@ public class GameActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        // Init UnitFactory
+        UnitFactory.getUnitFactory(this.getApplicationContext());
 
         universe = Universe.getUniverse();
 
@@ -118,21 +118,10 @@ public class GameActivity extends ActionBarActivity {
         if (requestCode == SELECT_PRODUCT) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                ProductFactory factory = ProductFactory.getFactory();
-
                 String unitName = data.getStringExtra("product");
 
-                Unit u = factory.getUnit(unitName);
+                Unit u = UnitFactory.getUnitFactory().getUnit(unitName, activeColony.planet.location);
                 activeColony.currentlyBuilding = u;
-                u.location = activeColony.planet.location;
-                /* int i = data.getIntExtra("product",0);
-                if(i==0) {
-                    activeColony.currentlyBuilding = new MissileBase(activeColony.planet.location);
-                } else if (i==1) {
-                    activeColony.currentlyBuilding = new Destroyer(activeColony.planet.location);
-                } else if (i==2) {
-                    activeColony.currentlyBuilding = new ColonyShip(activeColony.planet.location);
-                }*/
                 activeColony = null;
                 updateGUI();
             }

@@ -35,7 +35,7 @@ public class Player {
 
     public boolean canColonize() {
         for(Unit u : units)
-                if(u.getClass().equals(ColonyShip.class))
+                if(u.name.equals("Colony Ship"))
                     return true;
         /*for(Colony c : colonies)
             for(Unit u : c.units)
@@ -46,7 +46,7 @@ public class Player {
 
     public boolean canAttack() {
         for(Unit u : units)
-            if(u.getClass().equals(Destroyer.class))
+            if(u.name.equals("Destroyer"))
                 return true;
         return false;
     }
@@ -64,7 +64,7 @@ public class Player {
         Unit colonyShip = null;
         Location l=null;
         for(Unit u : units) {
-            if (u.getClass().equals(ColonyShip.class)) {
+            if (u.name.equals("Colony Ship")) {
                 colonyShip = u;
                 l=u.location;
             }

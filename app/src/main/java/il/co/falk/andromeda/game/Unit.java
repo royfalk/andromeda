@@ -6,6 +6,7 @@ import java.util.Random;
  * Created by roy on 1/2/15.
  */
 public class Unit {
+    public String name;
     int move;
     int maxHP;
     int attack;
@@ -15,7 +16,8 @@ public class Unit {
     public Location destination;
 
 
-    Unit(int move, int maxHP, int attack, int cost, Location location) {
+    public Unit(String name, int move, int maxHP, int attack, int cost, Location location) {
+        this.name = name;
         this.move = move;
         this.maxHP = maxHP;
         this.attack = attack;
@@ -23,14 +25,17 @@ public class Unit {
         hp = maxHP;
     }
 
-    // Copy Constructor
-    Unit(Unit unit) {
-        this.move = unit.move;
-        this.maxHP = unit.maxHP;
-        this.attack = unit.attack;
-        this.cost = unit.cost;
-        hp = maxHP;
+    public Unit(Unit u) {
+        name = u.name;
+        move = u.move;
+        maxHP = u.maxHP;
+        attack = u.attack;
+        cost = u.cost;
+        hp = u.maxHP;
+        location = u.location;
     }
+
+
 
     void attack(Unit target) {
         if(hp<=0)

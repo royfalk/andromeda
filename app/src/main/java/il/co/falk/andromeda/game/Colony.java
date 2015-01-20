@@ -17,7 +17,7 @@ public class Colony {
         this.planet = planet;
         units = new ArrayList<Unit>();
         queue = 0;
-        currentlyBuilding = new MissileBase(planet.location);
+        currentlyBuilding = new Unit("Trade Goods", 0,0,0,999, planet.location);
         planet.colony = this;
     }
 
@@ -29,12 +29,10 @@ public class Colony {
         queue += planet.production;
 
         if(queue >= currentlyBuilding.cost) {
-            ProductFactory factory = ProductFactory.getFactory();
             queue -= currentlyBuilding.cost;
-            Unit u = factory.getUnit(currentlyBuilding.getClass().getSimpleName());
-            units.add(u);
-            player.units.add(u);
-            u.location = planet.location;
+            units.add(currentlyBuilding);
+            player.units.add(currentlyBuilding);
+            currentlyBuilding = new Unit(currentlyBuilding);
         }
     }
 

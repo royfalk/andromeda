@@ -19,23 +19,7 @@ public class Combat {
         this.defenders = defenders;
     }
 
-    public Combat() {
-        Location l = new Location(0,0);
-        attackers = new ArrayList<Unit>();
-        defenders = new ArrayList<Unit>();
-        for(int i=0;i<3;i++) {
-            MissileBase m = new MissileBase(l);
-            defenders.add(m);
 
-            Destroyer d = new Destroyer(l);
-            defenders.add(d);
-        }
-
-        for(int i=0;i<6;i++) {
-            Destroyer d = new Destroyer(l);
-            attackers.add(d);
-        }
-    }
 
     public void fight() {
         Random r = new Random();

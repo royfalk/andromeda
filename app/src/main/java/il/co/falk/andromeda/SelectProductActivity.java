@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import il.co.falk.andromeda.game.ProductFactory;
+import il.co.falk.andromeda.game.UnitFactory;
 
 
 public class SelectProductActivity extends ActionBarActivity {
@@ -24,8 +24,7 @@ public class SelectProductActivity extends ActionBarActivity {
 
         LinearLayout layout = (LinearLayout)findViewById(R.id.product_layout);
 
-        ProductFactory factory = ProductFactory.getFactory();
-        ArrayList<String> unitTypes = factory.list();
+        ArrayList<String> unitTypes = UnitFactory.getUnitFactory().list(this.getApplicationContext());
 
         for(final String u : unitTypes) {
             Log.d(u,u);
@@ -67,24 +66,5 @@ public class SelectProductActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*public void selectMissileBase(View view) {
-        Intent i=new Intent();
-        i.putExtra("product",0);
-        setResult(RESULT_OK,i);
-        finish();
-    }
 
-    public void selectDestroyer(View view) {
-        Intent i=new Intent();
-        i.putExtra("product",1);
-        setResult(RESULT_OK,i);
-        finish();
-    }
-
-    public void selectColonyShip(View view) {
-        Intent i=new Intent();
-        i.putExtra("product",2);
-        setResult(RESULT_OK,i);
-        finish();
-    }*/
 }

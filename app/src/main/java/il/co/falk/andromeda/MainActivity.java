@@ -10,6 +10,7 @@ import android.view.View;
 
 import il.co.falk.andromeda.R;
 import il.co.falk.andromeda.game.Combat;
+import il.co.falk.andromeda.game.UnitFactory;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -49,9 +50,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void newCombat(View view) {
-        Combat c = new Combat();
-        c.fight();
-        if(c.attackSuccessful()) Log.d("Andromeda", "Attack Successful");
-        else Log.d("Andromeda", "Attack Failed");
+
     }
 }
