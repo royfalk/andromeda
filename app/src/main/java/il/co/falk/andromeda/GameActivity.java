@@ -97,7 +97,7 @@ public class GameActivity extends ActionBarActivity {
         boolean canAttack = universe.player.canAttack();
 
         for(PlanetView pv : planets) {
-            pv.updateView(canColonize, canAttack);
+            pv.updateView(this.getApplicationContext(), canColonize, canAttack);
         }
 
         // check if end of game

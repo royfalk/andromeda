@@ -1,5 +1,6 @@
 package il.co.falk.andromeda.game;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -12,7 +13,7 @@ public class Planet {
     public String name;
     public Colony colony;
     static int c = 0;
-
+    public ArrayList<Unit> units;
 
     Planet(boolean homePlanet) {
         int a = 1900 + c++;
@@ -26,5 +27,7 @@ public class Planet {
 
         location = new Location();
         colony = null;
+
+        units = new ArrayList<>();
     }
 }

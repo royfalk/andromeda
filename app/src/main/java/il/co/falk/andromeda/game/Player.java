@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Player {
     public static final int[] PLAYER_COLORS = {
-        Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.DKGRAY};
+        Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA, Color.CYAN};
 
     static int numPlayers = 0;
 
@@ -85,7 +85,7 @@ public class Player {
 
         // Remove ship from colony list
         if(colonyShip!=null && colonyWithShip!=null)
-            colonyWithShip.units.remove(colonyShip);
+            colonyWithShip.planet.units.remove(colonyShip);
     }
 
 

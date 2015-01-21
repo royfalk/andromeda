@@ -42,7 +42,7 @@ public class UninhabitedPlanetView extends PlanetView {
         leftTitle.setTextColor(Color.DKGRAY);
     }
 
-    public void updateView(boolean canColonize, boolean canAttack) {
+    public void updateView(Context context, boolean canColonize, boolean canAttack) {
         leftTitle.setText(planet.name + " ("+planet.production+")");
         colonize.setEnabled(canColonize);
     }

@@ -41,8 +41,9 @@ public class ColonyView extends PlanetView {
         leftTitle = (TextView)findViewById(R.id.leftTitle);
         rightTitle = (TextView)findViewById(R.id.rightTitle);
 
-        leftTitle.setTextColor(Color.DKGRAY);
-        rightTitle.setTextColor(Color.DKGRAY);
+        int color = colony.player.color;
+        leftTitle.setTextColor(color);
+        rightTitle.setTextColor(color);
 
         attack = (Button)findViewById(R.id.button_attack);
         attack.setOnClickListener(new OnClickListener(){
@@ -56,7 +57,7 @@ public class ColonyView extends PlanetView {
 
     }
 
-    public void updateView(boolean canColonize, boolean canAttack) {
+    public void updateView(Context context, boolean canColonize, boolean canAttack) {
         leftTitle.setText(planet.name + " (" + planet.production + ")");
         rightTitle.setText(colony.player.name);
         attack.setEnabled(canAttack);

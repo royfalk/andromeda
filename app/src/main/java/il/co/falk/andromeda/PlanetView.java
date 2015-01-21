@@ -33,7 +33,7 @@ public class PlanetView extends LinearLayout {
         planet = p;
     }
 
-    public void updateView(boolean canColonize, boolean canAttack) {}
+    public void updateView(Context context, boolean canColonize, boolean canAttack) {}
 
 
 

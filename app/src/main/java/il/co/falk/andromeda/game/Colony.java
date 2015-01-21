@@ -8,14 +8,13 @@ import java.util.ArrayList;
 public class Colony {
     public Player player;
     public Planet planet;
-    ArrayList<Unit> units;
+
     int queue;
     public Unit currentlyBuilding;
 
     Colony(Player player, Planet planet) {
         this.player = player;
         this.planet = planet;
-        units = new ArrayList<Unit>();
         queue = 0;
         currentlyBuilding = new Unit("Trade Goods", 0,0,0,999, planet.location);
         planet.colony = this;
@@ -30,7 +29,7 @@ public class Colony {
 
         if(queue >= currentlyBuilding.cost) {
             queue -= currentlyBuilding.cost;
-            units.add(currentlyBuilding);
+            planet.units.add(currentlyBuilding);
             player.units.add(currentlyBuilding);
             currentlyBuilding = new Unit(currentlyBuilding);
         }

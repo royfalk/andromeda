@@ -26,6 +26,7 @@ public class PlayerColonyView extends PlanetView {
     protected TextView rightTitle;
     private TextView subtitle;
     private Button produce;
+    private ShipsView shipsView;
 
 
     public PlayerColonyView(final GameActivity activity, Context context, Colony c, Planet p) {
@@ -59,13 +60,21 @@ public class PlayerColonyView extends PlanetView {
         leftTitle.setTextColor(Color.DKGRAY);
         rightTitle.setTextColor(Color.DKGRAY);
         subtitle.setTextColor(Color.DKGRAY);
+
+        shipsView = new ShipsView(context, planet);
+        layout.addView(shipsView);
     }
 
-    public void updateView(boolean canColonize, boolean canAttack) {
+    public void updateView(Context context, boolean canColonize, boolean canAttack) {
         leftTitle.setText(planet.name + " (" + planet.production + ")");
         rightTitle.setText(colony.player.name);
         subtitle.setText(colony.getRemainingTurns()+" turns for ");
         produce.setText(colony.currentlyBuilding.name);
+
+        if(shipsView!=null)
+            shipsView.updateView(context);
+
+
     }
 
 
