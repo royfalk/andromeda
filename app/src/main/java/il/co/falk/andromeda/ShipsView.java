@@ -46,7 +46,17 @@ class UnitButton extends ToggleButton {
 
         unit = u;
 
+
+        setChecked(false);
         setText(u.name);
-        setEnabled(false);
+        if(unit.move==0)
+            setEnabled(false);
+        setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //setChecked(!isChecked());
+                setText(unit.name);
+            }
+        });
     }
 }

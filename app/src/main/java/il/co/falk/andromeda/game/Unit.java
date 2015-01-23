@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class Unit {
     public String name;
-    int move;
+    public int move;
     int maxHP;
     int attack;
     int hp;

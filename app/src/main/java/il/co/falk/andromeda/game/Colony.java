@@ -16,7 +16,9 @@ public class Colony {
         this.player = player;
         this.planet = planet;
         queue = 0;
-        currentlyBuilding = new Unit("Trade Goods", 0,0,0,999, planet.location);
+
+        currentlyBuilding = UnitFactory.getUnitFactory().getUnit("Missile Base", planet.location);
+        //currentlyBuilding = new Unit("Trade Goods", 0,0,0,999, planet.location);
         planet.colony = this;
     }
 
