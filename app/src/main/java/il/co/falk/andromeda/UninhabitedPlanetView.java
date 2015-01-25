@@ -29,6 +29,18 @@ public class UninhabitedPlanetView extends PlanetView {
         addView(layout);
 
         leftTitle = (TextView)findViewById(R.id.leftTitle);
+        leftTitle.setClickable(true);
+
+
+        leftTitle.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity.getApplicationContext(), PlanetActivity.class);
+                intent.putExtra(PlanetActivity.PLANET_NAME, planet.name);
+                activity.startActivity(intent);
+            }
+        });
+
         colonize = (Button)findViewById(R.id.button_colonize);
         colonize.setOnClickListener(new OnClickListener(){
             @Override
@@ -46,4 +58,5 @@ public class UninhabitedPlanetView extends PlanetView {
         leftTitle.setText(planet.name + " ("+planet.production+")");
         colonize.setEnabled(canColonize);
     }
+
 }

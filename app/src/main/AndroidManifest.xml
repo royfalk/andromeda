@@ -24,6 +24,10 @@
             android:name=".SelectProductActivity"
             android:label="@string/title_activity_select_product" >
         </activity>
+        <activity
+            android:name=".PlanetActivity"
+            android:label="@string/title_activity_planet" >
+        </activity>
     </application>
 
 </manifest>

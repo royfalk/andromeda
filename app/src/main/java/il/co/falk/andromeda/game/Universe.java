@@ -1,5 +1,7 @@
 package il.co.falk.andromeda.game;
 
+import android.media.Image;
+
 import java.util.ArrayList;
 
 /**
@@ -85,6 +87,19 @@ public class Universe {
         return false;
     }
 
+    public Planet getPlanetByName(String name) {
+        for(Planet p :  planets)
+            if(p.name.equals(name))
+                return p;
+        return null;
+    }
 
+    public Colony getColonyByName(String name) {
+        for(Player p: players)
+            for(Colony c :  p.colonies)
+                if(c.planet.name.equals(name))
+                    return c;
+        return null;
+    }
 
 }
