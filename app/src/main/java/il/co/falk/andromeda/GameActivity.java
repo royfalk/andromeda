@@ -37,6 +37,7 @@ public class GameActivity extends ActionBarActivity {
 
         universe = Universe.getUniverse();
 
+        // Create Universe GUI
         repopulateStarMapWithPlanets();
         repopulatePlanets();
         updateGUI();
