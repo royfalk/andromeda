@@ -56,6 +56,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void newCombat(View view) {
-
+        // This does nothing - dummy comment too
     }
 }
