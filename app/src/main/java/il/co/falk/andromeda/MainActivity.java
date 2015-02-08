@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import il.co.falk.andromeda.R;
 import il.co.falk.andromeda.game.Combat;
@@ -19,6 +21,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //StarMapView map = new StarMapView(getApplicationContext(), null);
+        LinearLayout ll = (LinearLayout)findViewById(R.id.pipi);
+        //ll.addView(map);
     }
 
 

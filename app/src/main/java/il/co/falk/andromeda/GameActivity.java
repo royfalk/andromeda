@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class GameActivity extends ActionBarActivity {
 
         universe = Universe.getUniverse();
 
+        repopulateStarMapWithPlanets();
         repopulatePlanets();
         updateGUI();
     }
@@ -66,6 +68,18 @@ public class GameActivity extends ActionBarActivity {
     public void nextTurn(View view) {
         universe.nextTurn();
         updateGUI();
+    }
+
+    public void repopulateStarMapWithPlanets() {
+        RelativeLayout rl = (RelativeLayout)findViewById(R.id.star_map);
+
+        for(Planet p : universe.planets) {
+            TextView tv = new TextView(getApplicationContext());
+            tv.setText(p.name);
+            rl.addView(tv);
+            tv.setX(p.location.x);
+            tv.setY(p.location.y);
+        }
     }
 
     public void repopulatePlanets() {

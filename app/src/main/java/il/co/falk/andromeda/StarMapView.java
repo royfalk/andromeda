@@ -27,7 +27,7 @@ public class StarMapView extends LinearLayout {
         this.universe = universe;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
-        layout = (LinearLayout) inflater.inflate(R.layout.colony_layout, null);
+        layout = (LinearLayout) inflater.inflate(R.layout.star_map_layout, null);
         addView(layout);
     }
 

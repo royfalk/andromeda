@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by roy on 1/2/15.
  */
 public class Location {
-    float x,y;
+    public float x,y;
 
     Location() {
         Random r = new Random();

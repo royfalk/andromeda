@@ -25,18 +25,17 @@
             android:onClick="nextTurn"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Planets"
-            android:id="@+id/textPlanets" />
-
         <!--view
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:height="3dp"
             android:background="@color/material_blue_grey_950" /-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/star_map"
+            android:background="@drawable/stars"></RelativeLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -48,6 +47,12 @@
             android:id="@+id/planetsLayout">
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Planets"
+                android:id="@+id/textPlanets" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
