@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class GameActivity extends ActionBarActivity {
     ArrayList<PlanetView> planets;
     public static final int SELECT_PRODUCT = 965;
     Colony activeColony;
+    StarMapView starMapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,22 @@ public class GameActivity extends ActionBarActivity {
         universe = Universe.getUniverse();
 
         // Create Universe GUI
-        repopulateStarMapWithPlanets();
+        final RelativeLayout rl = (RelativeLayout)findViewById(R.id.star_map);
+        rl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            @Override
+            public void onGlobalLayout()
+            {
+                // gets called after layout has been done but before display.
+                rl.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                int w = rl.getWidth();
+                int h = rl.getHeight();
+                starMapView = new StarMapView(getApplicationContext(), universe, rl , w, h);
+            }
+        });
+
+
         repopulatePlanets();
         updateGUI();
     }
@@ -71,15 +88,17 @@ public class GameActivity extends ActionBarActivity {
         updateGUI();
     }
 
-    public void repopulateStarMapWithPlanets() {
+    public void repopulateStarMapWithPlanets(int w, int h) {
         RelativeLayout rl = (RelativeLayout)findViewById(R.id.star_map);
 
         for(Planet p : universe.planets) {
             TextView tv = new TextView(getApplicationContext());
             tv.setText(p.name);
             rl.addView(tv);
-            tv.setX(p.location.x);
-            tv.setY(p.location.y);
+            float x = w/102 * (1+p.location.x);
+            float y = h/102 * (1+p.location.y);
+            tv.setX(x);
+            tv.setY(y);
         }
     }
 
