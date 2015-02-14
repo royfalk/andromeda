@@ -20,11 +20,14 @@ import il.co.falk.andromeda.game.Universe;
  */
 public class StarMapView  {
     ArrayList<TextView> planetLabels;
+    ArrayList<Button> planetIcons;
 
     public StarMapView(Context context, Universe universe, RelativeLayout relativeLayout, int width, int height) {
         planetLabels = new ArrayList<>();
+        planetIcons = new ArrayList<>();
 
         for(Planet p : universe.planets) {
+            // create planet labels
             TextView tv = new TextView(context);
             tv.setText(p.name);
             relativeLayout.addView(tv);
@@ -41,6 +44,8 @@ public class StarMapView  {
                     Log.d("clickclick", (String)tv.getText());
                 }
             });
+
+            // create planet icons
 
         }
     }
