@@ -1,6 +1,7 @@
 package il.co.falk.andromeda;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -40,20 +41,18 @@ public class GameActivity extends ActionBarActivity {
         universe = Universe.getUniverse();
 
         // Create Universe GUI
-        final RelativeLayout rl = (RelativeLayout)findViewById(R.id.star_map);
-        rl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-        {
+        StarMapView map = (StarMapView) findViewById(R.id.star_map);
+        /*rl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onGlobalLayout()
-            {
+            public void onGlobalLayout() {
                 // gets called after layout has been done but before display.
                 rl.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
                 int w = rl.getWidth();
                 int h = rl.getHeight();
-                starMapView = new StarMapView(getApplicationContext(), universe, rl , w, h);
+                starMapView = new StarMapView(getApplicationContext(), universe, rl, w, h);
             }
-        });
+        });*/
 
 
         repopulatePlanets();
@@ -89,29 +88,29 @@ public class GameActivity extends ActionBarActivity {
     }
 
     public void repopulateStarMapWithPlanets(int w, int h) {
-        RelativeLayout rl = (RelativeLayout)findViewById(R.id.star_map);
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.star_map);
 
-        for(Planet p : universe.planets) {
+        for (Planet p : universe.planets) {
             TextView tv = new TextView(getApplicationContext());
             tv.setText(p.name);
             rl.addView(tv);
-            float x = w/102 * (1+p.location.x);
-            float y = h/102 * (1+p.location.y);
+            float x = w / 102 * (1 + p.location.x);
+            float y = h / 102 * (1 + p.location.y);
             tv.setX(x);
             tv.setY(y);
         }
     }
 
     public void repopulatePlanets() {
-        LinearLayout ll = (LinearLayout)findViewById(R.id.planetsLayout);
+        LinearLayout ll = (LinearLayout) findViewById(R.id.planetsLayout);
         ll.removeAllViews();
 
         planets = new ArrayList<>();
 
-        for(Planet p : universe.planets) {
+        for (Planet p : universe.planets) {
             PlanetView pv;
-            if(p.colony!=null) {
-                if(p.colony.player == universe.player) {
+            if (p.colony != null) {
+                if (p.colony.player == universe.player) {
                     pv = new PlayerColonyView(this, getApplicationContext(), p.colony, p);
                 } else {
                     pv = new ColonyView(this, getApplicationContext(), p.colony, p);
@@ -130,13 +129,13 @@ public class GameActivity extends ActionBarActivity {
         boolean canColonize = universe.player.canColonize();
         boolean canAttack = universe.player.canAttack();
 
-        for(PlanetView pv : planets) {
+        for (PlanetView pv : planets) {
             pv.updateView(this.getApplicationContext(), canColonize, canAttack);
         }
 
         // check if end of game
-        if(universe.gameEnded()) {
-            if(universe.player == universe.players.get(0))
+        if (universe.gameEnded()) {
+            if (universe.player == universe.players.get(0))
                 Log.d("Victory", "Victory");
             else
                 Log.d("Defeat", "Defeat");

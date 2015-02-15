@@ -31,11 +31,11 @@
             android:height="3dp"
             android:background="@color/material_blue_grey_950" /-->
 
-        <RelativeLayout
+        <il.co.falk.andromeda.StarMapView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/star_map"
-            android:background="@drawable/stars"></RelativeLayout>
+            android:background="@drawable/stars"></il.co.falk.andromeda.StarMapView>
 
         <LinearLayout
             android:orientation="vertical"
