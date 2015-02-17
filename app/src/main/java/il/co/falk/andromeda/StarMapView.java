@@ -31,8 +31,12 @@ public class StarMapView extends View implements
         GestureDetector.OnDoubleTapListener  {
     Paint paint;
     private GestureDetectorCompat mDetector;
-    private static final String DEBUG_TAG = "star map gesture";
+
     private int x,y,zoom;
+
+    private static final String DEBUG_TAG = "star map gesture";
+    private static final int MARGIN = 10;
+    private static final String[] PLANET_COLORS = {"#999999", "#FF9966", "#996633", "#99FF99", "#009999", "#00CC00"};
 
     public StarMapView(Context context) {
         super(context);
@@ -112,13 +116,27 @@ public class StarMapView extends View implements
 
     protected void onDraw(Canvas canvas) {
         Universe universe = Universe.getUniverse();
-        int width = getWidth();
-        int height = getHeight();
+        float width = getWidth() - MARGIN*2;
+        float height = getHeight() - MARGIN*2;
+        float gridX = width/universe.WIDTH;
+        float gridY = height/universe.HEIGHT;
 
         for(Planet p : universe.planets) {
-            float x = width/104 * (1+p.location.x);
-            float y = height/104 * (1+p.location.y);
-            canvas.drawCircle(x,y,5, paint);
+            int planetColor = Color.parseColor(PLANET_COLORS[p.production]);
+            paint.setColor(planetColor);
+            float x = MARGIN + p.location.x * gridX * zoom;
+            float y = MARGIN + p.location.y * gridY * zoom;
+            //float x = MARGIN + width/(width+MARGIN) * (1+p.location.x) * zoom;
+            //float y = MARGIN + height/(height+MARGIN) * (1+p.location.y) * zoom;
+
+            canvas.drawCircle(x,y,5 + zoom, paint);
+
+            if(p.colony != null)
+                paint.setColor(p.colony.player.color);
+            else
+                paint.setColor(Color.LTGRAY);
+            // TODO: x-y depending on length of planet name
+            canvas.drawText("test", x-10,y+15, paint);
         }
     }
 
