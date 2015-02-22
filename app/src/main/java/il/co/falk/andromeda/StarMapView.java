@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,9 +27,10 @@ import il.co.falk.andromeda.game.Universe;
 /**
  * Created by roy on 1/21/15.
  */
-public class StarMapView extends View implements
-        GestureDetector.OnGestureListener,
-        GestureDetector.OnDoubleTapListener  {
+public class StarMapView extends View {
+        //implements
+        //GestureDetector.OnGestureListener,
+        //GestureDetector.OnDoubleTapListener  {
     Paint paint;
     private GestureDetectorCompat mDetector;
 
@@ -37,6 +39,7 @@ public class StarMapView extends View implements
     private static final String DEBUG_TAG = "star map gesture";
     private static final int MARGIN = 10;
     private static final String[] PLANET_COLORS = {"#999999", "#FF9966", "#996633", "#99FF99", "#009999", "#00CC00"};
+    private ScaleGestureDetector mScaleDetector;
 
     public StarMapView(Context context) {
         super(context);
@@ -57,12 +60,14 @@ public class StarMapView extends View implements
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.GREEN);
 
-        mDetector = new GestureDetectorCompat(context,this);
-        mDetector.setOnDoubleTapListener(this);
+        //mDetector = new GestureDetectorCompat(context,this);
+        //mDetector.setOnDoubleTapListener(this);
 
         x = 0;
         y = 0;
         zoom = 1;
+
+        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
 
@@ -145,12 +150,14 @@ public class StarMapView extends View implements
     ////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        this.mDetector.onTouchEvent(event);
+        mScaleDetector.onTouchEvent(event);
+
+        //this.mDetector.onTouchEvent(event);
         // Be sure to call the superclass implementation
-        return super.onTouchEvent(event);
+        return true; //super.onTouchEvent(event);
     }
 
-    @Override
+    /*@Override
     public boolean onDown(MotionEvent event) {
         Log.d(DEBUG_TAG,"onDown: " + event.toString());
         return true;
@@ -210,7 +217,25 @@ public class StarMapView extends View implements
         Log.d("zoom", String.valueOf(zoom));
 
         return true;
+    }*/
+
+
+
+
+private class ScaleListener
+        extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+    @Override
+    public boolean onScale(ScaleGestureDetector detector) {
+        Log.d("Scale", String.valueOf(detector.getScaleFactor()));
+        /*mScaleFactor *= detector.getScaleFactor();
+
+        // Don't let the object get too small or too large.
+        mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
+
+        invalidate();*/
+        return true;
     }
+}
 
 }
 

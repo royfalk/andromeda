@@ -42,6 +42,9 @@ public class GameActivity extends ActionBarActivity {
 
         // Create Universe GUI
         StarMapView map = (StarMapView) findViewById(R.id.star_map);
+        View root = map.getRootView();
+        root.setBackgroundColor(Color.rgb(0,0,0));
+
         /*rl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
