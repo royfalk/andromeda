@@ -1,5 +1,6 @@
 package il.co.falk.andromeda.game;
 
+import android.graphics.Rect;
 import android.media.Image;
 
 import java.util.ArrayList;
@@ -100,6 +101,15 @@ public class Universe {
                 if(c.planet.name.equals(name))
                     return c;
         return null;
+    }
+
+    public ArrayList<Planet> getPlanetsInRect(Rect rect) {
+        ArrayList<Planet> planets = new ArrayList<>();
+
+        for(Planet p :  planets)
+            if(rect.contains((int)p.location.x, (int)p.location.y))
+                planets.add(p);
+        return planets;
     }
 
 }

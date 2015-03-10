@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
@@ -31,10 +32,19 @@ public class StarMapView extends View {
         //implements
         //GestureDetector.OnGestureListener,
         //GestureDetector.OnDoubleTapListener  {
+
+    GestureDetector scrollGestureDetector;
+
     Paint paint;
+
+    private Rect lMap, lView;
+    //private Rect somthing;
+
     private GestureDetectorCompat mDetector;
 
-    private int x,y,zoom;
+    //private int x,y;
+    //private float cx,cy;
+    private float zoom;
 
     private static final String DEBUG_TAG = "star map gesture";
     private static final int MARGIN = 10;
@@ -63,11 +73,32 @@ public class StarMapView extends View {
         //mDetector = new GestureDetectorCompat(context,this);
         //mDetector.setOnDoubleTapListener(this);
 
-        x = 0;
+        //Universe u = Universe.getUniverse();
+        lMap = new Rect(0,0,Universe.WIDTH, Universe.HEIGHT);
+        lView = new Rect(lMap);
+
+        /*x = 0;
         y = 0;
+        cx = 0;
+        cy = 0;*/
+
         zoom = 1;
 
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+
+        scrollGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onScroll(final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY) {
+                    System.out.println("SCROLL " + distanceX + ", " + distanceY);
+                    int l = (int)(lView.left - distanceX);
+                    int r = (int)(lView.right - distanceX);
+                    int t = (int)(lView.top - distanceY);
+                    int b = (int)(lView.bottom - distanceY);
+                    lView.set(l,t,r,b);
+                    invalidate();
+                    return true;
+                }
+        });
     }
 
 
@@ -134,7 +165,7 @@ public class StarMapView extends View {
             //float x = MARGIN + width/(width+MARGIN) * (1+p.location.x) * zoom;
             //float y = MARGIN + height/(height+MARGIN) * (1+p.location.y) * zoom;
 
-            canvas.drawCircle(x,y,5 + zoom, paint);
+            canvas.drawCircle(x,y,5 * zoom, paint);
 
             if(p.colony != null)
                 paint.setColor(p.colony.player.color);
@@ -143,7 +174,16 @@ public class StarMapView extends View {
             // TODO: x-y depending on length of planet name
             canvas.drawText("test", x-10,y+15, paint);
         }
+
+        paint.setColor(Color.LTGRAY);
+        canvas.drawRect(lView, paint);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // Scroll
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////
     // Gestures
@@ -151,7 +191,7 @@ public class StarMapView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event){
         mScaleDetector.onTouchEvent(event);
-
+        scrollGestureDetector.onTouchEvent(event);
         //this.mDetector.onTouchEvent(event);
         // Be sure to call the superclass implementation
         return true; //super.onTouchEvent(event);
@@ -227,12 +267,32 @@ private class ScaleListener
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
         Log.d("Scale", String.valueOf(detector.getScaleFactor()));
+
+        float cx = detector.getFocusX();
+        float cy = detector.getFocusY();
+
+        zoom *= detector.getScaleFactor();
+        if(zoom<1) zoom = 1;
+        if(zoom>16) zoom = 16;
+
+        int zwidth = Math.round(lMap.width()/zoom);
+        int zheight = Math.round(lMap.height()/zoom);
+
+        int zx = Math.round(Math.min(cx -  zwidth/2, zwidth/2));
+        int zy = Math.round(Math.min(cy -  zheight/2, zheight/2));
+
+        lView = new Rect(zx, zy, zwidth, zheight);
+
+        invalidate();
         /*mScaleFactor *= detector.getScaleFactor();
 
         // Don't let the object get too small or too large.
         mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
 
         invalidate();*/
+
+
+
         return true;
     }
 }
