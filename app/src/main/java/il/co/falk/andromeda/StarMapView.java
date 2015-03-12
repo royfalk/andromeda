@@ -37,8 +37,7 @@ public class StarMapView extends View {
 
     Paint paint;
 
-    private Rect lMap, lView;
-    //private Rect somthing;
+    private FRect lMap, lView, pView;
 
     private GestureDetectorCompat mDetector;
 
@@ -74,8 +73,8 @@ public class StarMapView extends View {
         //mDetector.setOnDoubleTapListener(this);
 
         //Universe u = Universe.getUniverse();
-        lMap = new Rect(0,0,Universe.WIDTH, Universe.HEIGHT);
-        lView = new Rect(lMap);
+        lMap = new FRect(0,0,Universe.WIDTH, Universe.HEIGHT);
+        lView = new FRect(lMap);
 
         /*x = 0;
         y = 0;
@@ -90,11 +89,8 @@ public class StarMapView extends View {
                 @Override
                 public boolean onScroll(final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY) {
                     System.out.println("SCROLL " + distanceX + ", " + distanceY);
-                    int l = (int)(lView.left - distanceX);
-                    int r = (int)(lView.right - distanceX);
-                    int t = (int)(lView.top - distanceY);
-                    int b = (int)(lView.bottom - distanceY);
-                    lView.set(l,t,r,b);
+
+                    lView.move(distanceX, distanceY);
                     invalidate();
                     return true;
                 }
@@ -154,14 +150,19 @@ public class StarMapView extends View {
         Universe universe = Universe.getUniverse();
         float width = getWidth() - MARGIN*2;
         float height = getHeight() - MARGIN*2;
-        float gridX = width/universe.WIDTH;
-        float gridY = height/universe.HEIGHT;
+        //float gridX = width/universe.WIDTH;
+        //float gridY = height/universe.HEIGHT;
 
         for(Planet p : universe.planets) {
             int planetColor = Color.parseColor(PLANET_COLORS[p.production]);
             paint.setColor(planetColor);
-            float x = MARGIN + p.location.x * gridX * zoom;
-            float y = MARGIN + p.location.y * gridY * zoom;
+            //float x = MARGIN + p.location.x * gridX * zoom;
+            //float y = MARGIN + p.location.y * gridY * zoom;
+            if(!lView.contains(p.location.x, p.location.y)) continue;
+
+            float x = MARGIN + lView.getRelativeX(p.location.x, width);
+            float y = MARGIN + lView.getRelativeY(p.location.y, height);
+
             //float x = MARGIN + width/(width+MARGIN) * (1+p.location.x) * zoom;
             //float y = MARGIN + height/(height+MARGIN) * (1+p.location.y) * zoom;
 
@@ -175,8 +176,8 @@ public class StarMapView extends View {
             canvas.drawText("test", x-10,y+15, paint);
         }
 
-        paint.setColor(Color.LTGRAY);
-        canvas.drawRect(lView, paint);
+        //paint.setColor(Color.LTGRAY);
+        //canvas.drawRect(lView.getRect(), paint);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -197,68 +198,6 @@ public class StarMapView extends View {
         return true; //super.onTouchEvent(event);
     }
 
-    /*@Override
-    public boolean onDown(MotionEvent event) {
-        Log.d(DEBUG_TAG,"onDown: " + event.toString());
-        return true;
-    }
-
-    @Override
-    public boolean onFling(MotionEvent event1, MotionEvent event2,
-                           float velocityX, float velocityY) {
-        Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
-        return true;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onLongPress: " + event.toString());
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-                            float distanceY) {
-        Log.d(DEBUG_TAG, "onScroll: " + e1.toString()+e2.toString());
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onShowPress: " + event.toString());
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onSingleTapUp: " + event.toString());
-        return true;
-    }
-
-    @Override
-    public boolean onDoubleTap(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onDoubleTap: " + event.toString());
-        return true;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onDoubleTapEvent: " + event.toString());
-
-        if(zoom>1) zoom/=2;
-        Log.d("zoom", String.valueOf(zoom));
-
-        return true;
-    }
-
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + event.toString());
-
-        if(zoom<16) zoom*=2;
-        Log.d("zoom", String.valueOf(zoom));
-
-        return true;
-    }*/
-
 
 
 
@@ -267,36 +206,88 @@ private class ScaleListener
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
         Log.d("Scale", String.valueOf(detector.getScaleFactor()));
+        Universe universe = Universe.getUniverse();
 
-        float cx = detector.getFocusX();
-        float cy = detector.getFocusY();
-
-        zoom *= detector.getScaleFactor();
-        if(zoom<1) zoom = 1;
-        if(zoom>16) zoom = 16;
-
-        int zwidth = Math.round(lMap.width()/zoom);
-        int zheight = Math.round(lMap.height()/zoom);
-
-        int zx = Math.round(Math.min(cx -  zwidth/2, zwidth/2));
-        int zy = Math.round(Math.min(cy -  zheight/2, zheight/2));
-
-        lView = new Rect(zx, zy, zwidth, zheight);
+        float z = detector.getScaleFactor();
+        lView.zoom(z);
 
         invalidate();
-        /*mScaleFactor *= detector.getScaleFactor();
-
-        // Don't let the object get too small or too large.
-        mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
-
-        invalidate();*/
-
-
-
         return true;
     }
 }
 
 }
 
+class FRect {
+    private float x,y, w, h, origX, origY, origW, origH, z;
+    private final float MIN_ZOOM = 1, MAX_ZOOM = 16;
+
+    FRect(float x,float y,float w,float h) {
+        origX = this.x = x;
+        origY = this.y = y;
+        origW = this.w = w;
+        origH = this.h = h;
+        z = 1;
+    }
+
+    FRect(FRect rect) {
+        origX = this.x = rect.x;
+        origY = this.y = rect.y;
+        origW = this.w = rect.w;
+        origH = this.h = rect.h;
+        z = 1;
+    }
+
+    public boolean contains(float x, float y) {
+        if(x<this.x || y<this.y || x>this.x+w || y>this.y+h) return false;
+        return true;
+    }
+
+    public void zoom(float zfactor) {
+        z *= zfactor;
+        if(z < MIN_ZOOM) z = MIN_ZOOM;
+        if(z > MAX_ZOOM) z = MAX_ZOOM;
+
+        float cx = (x+w)/2;
+        float cy = (y+h)/2;
+        w = origW / z;
+        h = origH / z;
+
+        x = cx - w/2;
+        if(x<0) x=0;
+        if(x+w>origW) x=origW-w;
+
+        y = cy - h/2;
+        if(y<0) y=0;
+        if(y+h>origH) y=origH-h;
+    }
+
+    public void move(float dx, float dy) {
+        x += dx;
+        if(x<0) x=0;
+        if(x+w>origW) x=origW-w;
+
+        y += dy;
+        if(y<0) y=0;
+        if(y+h>origH) y=origH-h;
+    }
+
+    public Rect getRect() {
+        int ix = Math.round(x);
+        int iy = Math.round(y);
+        int iw = Math.round(w);
+        int ih = Math.round(h);
+        return new Rect(ix, iy, ix+iw, iy+ih);
+    }
+
+    public float getRelativeX(float aX, float actualWidth) {
+        if(aX<x || aX>x+w) return -1;
+        return (aX-x)/w*actualWidth;
+    }
+
+    public float getRelativeY(float aY, float actualheight) {
+        if(aY<x || aY>y+h) return -1;
+        return (aY-y)/h*actualheight;
+    }
+}
 
