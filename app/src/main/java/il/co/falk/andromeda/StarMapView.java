@@ -1,6 +1,7 @@
 package il.co.falk.andromeda;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -226,6 +227,31 @@ public class StarMapView extends View {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent event) {
             Log.d("Tap", "tap");
+
+            Universe universe = Universe.getUniverse();
+            float width = getWidth() - MARGIN*2;
+            float height = getHeight() - MARGIN*2;
+
+            for(Planet p : universe.planets) {
+                if (!lView.contains(p.location.x, p.location.y)) continue;
+
+                float x = event.getX();
+                float y = event.getY();
+
+                float px = MARGIN + lView.getRelativeX(p.location.x, width);
+                float py = MARGIN + lView.getRelativeY(p.location.y, height);
+
+                float radius = 5 * lView.z;
+
+                if (x <= px + radius && x >= px - radius && y <= py + radius && y >= py - radius) {
+                    Context context = getContext();
+                    Intent intent = new Intent(context, PlanetActivity.class);
+                    intent.putExtra(PlanetActivity.PLANET_NAME, p.name);
+
+                    context.startActivity(intent);
+                }
+            }
+
             return true;
         }
 
