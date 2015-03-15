@@ -33,13 +33,11 @@ public class StarMapView extends View {
         //GestureDetector.OnGestureListener,
         //GestureDetector.OnDoubleTapListener  {
 
-    GestureDetector scrollGestureDetector;
+    //GestureDetector scrollGestureDetector;
 
     Paint paint;
 
     private FRect lMap, lView, pView;
-
-    private GestureDetectorCompat mDetector;
 
     //private int x,y;
     //private float cx,cy;
@@ -49,6 +47,7 @@ public class StarMapView extends View {
     private static final int MARGIN = 10;
     private static final String[] PLANET_COLORS = {"#999999", "#FF9966", "#996633", "#99FF99", "#009999", "#00CC00"};
     private ScaleGestureDetector mScaleDetector;
+    private GestureDetectorCompat mDetector;
 
     public StarMapView(Context context) {
         super(context);
@@ -85,16 +84,19 @@ public class StarMapView extends View {
 
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 
-        scrollGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+        mDetector = new GestureDetectorCompat(context, new SimpleGestureListener());
+
+
+        /*scrollGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onScroll(final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY) {
                     System.out.println("SCROLL " + distanceX + ", " + distanceY);
 
-                    lView.move(distanceX, distanceY);
+                    lView.move(distanceX/getWidth(), distanceY/getHeight());
                     invalidate();
                     return true;
                 }
-        });
+        });*/
     }
 
 
@@ -153,6 +155,9 @@ public class StarMapView extends View {
         //float gridX = width/universe.WIDTH;
         //float gridY = height/universe.HEIGHT;
 
+        //setTextSizeForWidth(paint, 40, "dododo");
+        paint.setTextSize(32);
+
         for(Planet p : universe.planets) {
             int planetColor = Color.parseColor(PLANET_COLORS[p.production]);
             paint.setColor(planetColor);
@@ -166,23 +171,24 @@ public class StarMapView extends View {
             //float x = MARGIN + width/(width+MARGIN) * (1+p.location.x) * zoom;
             //float y = MARGIN + height/(height+MARGIN) * (1+p.location.y) * zoom;
 
-            canvas.drawCircle(x,y,5 * zoom, paint);
+            canvas.drawCircle(x,y,5 * lView.z, paint);
 
             if(p.colony != null)
                 paint.setColor(p.colony.player.color);
             else
                 paint.setColor(Color.LTGRAY);
             // TODO: x-y depending on length of planet name
-            canvas.drawText("test", x-10,y+15, paint);
+
+            String test = "test";
+            Rect b = new Rect();
+            paint.getTextBounds(test, 0 ,test.length(), b);
+            canvas.drawText(test, x-b.width()/2,y+ 5 * lView.z + 5, paint);
         }
 
         //paint.setColor(Color.LTGRAY);
         //canvas.drawRect(lView.getRect(), paint);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Scroll
-    ////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -191,36 +197,68 @@ public class StarMapView extends View {
     ////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        float x = event.getX();
+        float y = event.getY();
+
         mScaleDetector.onTouchEvent(event);
-        scrollGestureDetector.onTouchEvent(event);
-        //this.mDetector.onTouchEvent(event);
-        // Be sure to call the superclass implementation
-        return true; //super.onTouchEvent(event);
-    }
+        mDetector.onTouchEvent(event);
 
-
-
-
-private class ScaleListener
-        extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-    @Override
-    public boolean onScale(ScaleGestureDetector detector) {
-        Log.d("Scale", String.valueOf(detector.getScaleFactor()));
-        Universe universe = Universe.getUniverse();
-
-        float z = detector.getScaleFactor();
-        lView.zoom(z);
-
-        invalidate();
         return true;
     }
-}
+
+
+    private class SimpleGestureListener extends GestureDetector.SimpleOnGestureListener {
+        private static final String DEBUG_TAG = "Gestures";
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            Log.d(DEBUG_TAG,"onDown: " + event.toString());
+            return true;
+        }
+
+        /*@Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+            Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
+            return true;
+        }*/
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent event) {
+            Log.d("Tap", "tap");
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY) {
+            System.out.println("SCROLL " + distanceX + ", " + distanceY);
+
+            lView.move(distanceX/getWidth(), distanceY/getHeight());
+            invalidate();
+            return true;
+        }
+    }
+
+    private class ScaleListener
+            extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            Log.d("Scale", String.valueOf(detector.getScaleFactor()));
+            Universe universe = Universe.getUniverse();
+
+            float z = detector.getScaleFactor();
+            lView.zoom(z);
+
+            invalidate();
+            return true;
+        }
+    }
 
 }
 
 class FRect {
-    private float x,y, w, h, origX, origY, origW, origH, z;
-    private final float MIN_ZOOM = 1, MAX_ZOOM = 16;
+    public float x,y, w, h, origX, origY, origW, origH, z;
+    public final float MIN_ZOOM = 1, MAX_ZOOM = 16;
 
     FRect(float x,float y,float w,float h) {
         origX = this.x = x;
@@ -263,11 +301,11 @@ class FRect {
     }
 
     public void move(float dx, float dy) {
-        x += dx;
+        x += dx*w;
         if(x<0) x=0;
         if(x+w>origW) x=origW-w;
 
-        y += dy;
+        y += dy*h;
         if(y<0) y=0;
         if(y+h>origH) y=origH-h;
     }
