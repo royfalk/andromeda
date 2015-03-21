@@ -105,8 +105,8 @@ public class GameActivity extends ActionBarActivity {
     }
 
     public void repopulatePlanets() {
-        LinearLayout ll = (LinearLayout) findViewById(R.id.planetsLayout);
-        ll.removeAllViews();
+        //LinearLayout ll = (LinearLayout) findViewById(R.id.planetsLayout);
+        //ll.removeAllViews();
 
         planets = new ArrayList<>();
 
@@ -121,7 +121,7 @@ public class GameActivity extends ActionBarActivity {
             } else {
                 pv = new UninhabitedPlanetView(this, getApplicationContext(), p);
             }
-            ll.addView(pv);
+            //ll.addView(pv);
             planets.add(pv);
         }
 

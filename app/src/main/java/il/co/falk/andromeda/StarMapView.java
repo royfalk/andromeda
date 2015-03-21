@@ -180,10 +180,10 @@ public class StarMapView extends View {
                 paint.setColor(Color.LTGRAY);
             // TODO: x-y depending on length of planet name
 
-            String test = "test";
+
             Rect b = new Rect();
-            paint.getTextBounds(test, 0 ,test.length(), b);
-            canvas.drawText(test, x-b.width()/2,y+ 5 * lView.z + 5, paint);
+            paint.getTextBounds(p.name, 0 ,p.name.length(), b);
+            canvas.drawText(p.name, x-b.width()/2,y+ 5 * lView.z + 5, paint);
         }
 
         //paint.setColor(Color.LTGRAY);

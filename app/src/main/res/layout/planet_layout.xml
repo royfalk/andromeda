@@ -4,34 +4,42 @@
     android:orientation="vertical" >
 
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="3dp">
+<RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@drawable/ocean"
+                android:layout_alignBottom="@+id/leftTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
             <TextView
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
-                android:id="@+id/leftTitle" />
+                android:id="@+id/leftTitle"
+                android:layout_toRightOf="@+id/imageView"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Colonize"
+                android:enabled="false"
+                android:id="@+id/button_colonize"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Colonize"
-            android:enabled="false"
-            android:id="@+id/button_colonize"
-            android:layout_gravity="right" />
+        </RelativeLayout>
 
-    </LinearLayout>
+
     
     <View
         android:layout_width="wrap_content"
