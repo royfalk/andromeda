@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+
 import il.co.falk.andromeda.R;
 import il.co.falk.andromeda.game.Combat;
 import il.co.falk.andromeda.game.UnitFactory;
@@ -59,4 +64,10 @@ public class MainActivity extends ActionBarActivity {
         // This does nothing - dummy comment too
         // Still doesn't work
     }
+
+    public void newOpengl(View view) {
+        Intent intent = new Intent(this, OpenGLES20Activity.class);
+        startActivity(intent);
+    }
 }
+
