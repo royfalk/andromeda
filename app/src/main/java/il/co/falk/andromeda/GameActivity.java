@@ -165,4 +165,20 @@ public class GameActivity extends ActionBarActivity {
     }
 
 
+    public void onGame(View view) {
+    }
+
+    public void onColonies(View view) {
+    }
+
+    public void onPlanets(View view) {
+    }
+
+    public void onRaces(View view) {
+    }
+
+    public void onNextTurn(View view) {
+        universe.nextTurn();
+        updateGUI();
+    }
 }

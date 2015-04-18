@@ -7,6 +7,7 @@ import java.util.Random;
  * Created by roy on 1/2/15.
  */
 public class Planet {
+    public final static int MAX_SIZE = 5, AVG_SIZE = 3;
     public final static int MAX_PROD = 5, AVG_PROD = 3;
     public int production;
     public Location location;

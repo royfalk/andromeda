@@ -5,6 +5,8 @@ import android.opengl.EGLConfig;
 import android.opengl.GLES20;
 import android.opengl.GLES10;
 import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -71,13 +73,19 @@ class MyGLSurfaceView extends GLSurfaceView {
         setRenderer(mRenderer);
 
         // Render the view only when there is a change in the drawing data
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 }
 
 class MyGLRenderer implements GLSurfaceView.Renderer {
     private Triangle mTriangle;
     private Square   mSquare;
+    private float[] mRotationMatrix = new float[16];
+
+    // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
+    private final float[] mMVPMatrix = new float[16];
+    private final float[] mProjectionMatrix = new float[16];
+    private final float[] mViewMatrix = new float[16];
 
     /*public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
@@ -85,9 +93,30 @@ class MyGLRenderer implements GLSurfaceView.Renderer {
     }*/
 
     public void onDrawFrame(GL10 unused) {
+        float[] scratch = new float[16];
+
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-        mTriangle.draw();
+
+        // Set the camera position (View matrix)
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+
+        // Calculate the projection and view transformation
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+        // Create a rotation transformation for the triangle
+        long time = SystemClock.uptimeMillis() % 4000L;
+        float angle = 0.090f * ((int) time);
+        Matrix.setRotateM(mRotationMatrix, 0, angle, 0, 0, -1.0f);
+
+        // Combine the rotation matrix with the projection and camera view
+        // Note that the mMVPMatrix factor *must be first* in order
+        // for the matrix multiplication product to be correct.
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
+
+        // Draw shape
+        mTriangle.draw(scratch);
+
     }
 
     @Override
@@ -104,6 +133,13 @@ class MyGLRenderer implements GLSurfaceView.Renderer {
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
+
+        float ratio = (float) width / height;
+
+        // this projection matrix is applied to object coordinates
+        // in the onDrawFrame() method
+        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+
     }
 
     public static int loadShader(int type, String shaderCode){
@@ -118,18 +154,31 @@ class MyGLRenderer implements GLSurfaceView.Renderer {
 
         return shader;
     }
+
+
+
+
+
 }
 
 class Triangle {
+    private final String vertexShaderCode =
+            // This matrix member variable provides a hook to manipulate
+            // the coordinates of the objects that use this vertex shader
+            "uniform mat4 uMVPMatrix;" +
+                    "attribute vec4 vPosition;" +
+                    "void main() {" +
+                    // the matrix must be included as a modifier of gl_Position
+                    // Note that the uMVPMatrix factor *must be first* in order
+                    // for the matrix multiplication product to be correct.
+                    "  gl_Position = uMVPMatrix * vPosition;" +
+                    "}";
+
+    // Use to access and set the view transformation
+    private int mMVPMatrixHandle;
 
     private FloatBuffer vertexBuffer;
     private final int mProgram;
-
-    private final String vertexShaderCode =
-            "attribute vec4 vPosition;" +
-                    "void main() {" +
-                    "  gl_Position = vPosition;" +
-                    "}";
 
     private final String fragmentShaderCode =
             "precision mediump float;" +
@@ -191,7 +240,8 @@ class Triangle {
     private final int vertexCount = triangleCoords.length / COORDS_PER_VERTEX;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    public void draw() {
+    public void draw(float[] mvpMatrix) { // pass in the calculated transformation matrix
+
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram);
 
@@ -208,6 +258,12 @@ class Triangle {
 
         // get handle to fragment shader's vColor member
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
+
+        // get handle to shape's transformation matrix
+        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
+
+        // Pass the projection and view transformation to the shader
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
 
         // Set color for drawing the triangle
         GLES20.glUniform4fv(mColorHandle, 1, color, 0);

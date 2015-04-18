@@ -7,55 +7,65 @@
 
     tools:context=".GameActivity">
 
-
-
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Game"
-            android:id="@+id/textView2" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Colonies"
-            android:id="@+id/textView3" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Planets"
-            android:id="@+id/textView4" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Races"
-            android:id="@+id/textView5" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Next Turn"
-            android:id="@+id/textView6" />
-    </LinearLayout>
     <il.co.falk.andromeda.StarMapView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/star_map"
     />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        >
+
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Game"
+            android:onClick="onGame"
+            android:id="@+id/buttonGame"
+            android:layout_margin="5dp"
+            android:background="@drawable/green_button"
+            android:textColor="#00FF00" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Colonies"
+            android:onClick="onColonies"
+            android:id="@+id/buttonColonies"
+            android:layout_margin="5dp"
+            android:background="@drawable/green_button"
+            android:textColor="#00FF00" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Planets"
+            android:onClick="onPlanets"
+            android:id="@+id/buttonPlanets"
+            android:layout_margin="5dp"
+            android:background="@drawable/green_button"
+            android:textColor="#00FF00" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Races"
+            android:onClick="onRaces"
+            android:id="@+id/buttonRaces"
+            android:layout_margin="5dp"
+            android:background="@drawable/green_button"
+            android:textColor="#00FF00" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next Turn"
+            android:onClick="onNextTurn"
+            android:id="@+id/buttonNextTurn"
+            android:layout_margin="5dp"
+            android:background="@drawable/green_button"
+            android:textColor="#00FF00" />
+    </LinearLayout>
 </RelativeLayout>
