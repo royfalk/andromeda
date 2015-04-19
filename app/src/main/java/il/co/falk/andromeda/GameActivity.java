@@ -172,6 +172,8 @@ public class GameActivity extends ActionBarActivity {
     }
 
     public void onPlanets(View view) {
+        Intent intent = new Intent(this, PlanetsActivity.class);
+        startActivity(intent);
     }
 
     public void onRaces(View view) {

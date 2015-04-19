@@ -8,5 +8,6 @@
     <string name="title_activity_select_product">SelectProductActivity</string>
     <string name="title_activity_planet">PlanetActivity</string>
     <string name="title_activity_open_gles20">OpenGLES20Activity</string>
+    <string name="title_activity_planets">Planets</string>
 
 </resources>

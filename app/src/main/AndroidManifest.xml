@@ -36,6 +36,10 @@
             android:name=".OpenGLES20Activity"
             android:label="@string/title_activity_open_gles20" >
         </activity>
+        <activity
+            android:name=".PlanetsActivity"
+            android:label="@string/title_activity_planets" >
+        </activity>
     </application>
 
 </manifest>
