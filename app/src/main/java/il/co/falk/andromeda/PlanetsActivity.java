@@ -3,18 +3,22 @@ package il.co.falk.andromeda;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import il.co.falk.andromeda.game.Planet;
+import il.co.falk.andromeda.game.Player;
 import il.co.falk.andromeda.game.Universe;
 
 
@@ -28,13 +32,7 @@ public class PlanetsActivity extends ActionBarActivity {
         final ListView listview = (ListView) findViewById(R.id.listview);
         Universe universe = Universe.getUniverse();
 
-        ArrayList<String> list = new ArrayList<>();
-        for(Planet p : universe.planets) {
-            list.add(p.name);
-        }
-
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
+        final PlanetsArrayAdapter adapter = new PlanetsArrayAdapter(this,universe.planets);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,30 +80,40 @@ public class PlanetsActivity extends ActionBarActivity {
 }
 
 
-class StableArrayAdapter extends ArrayAdapter<String> {
 
-    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+class PlanetsArrayAdapter extends ArrayAdapter<Planet> {
+    private final Context context;
 
-    public StableArrayAdapter(Context context, int textViewResourceId,
-                              List<String> objects) {
-        super(context, textViewResourceId, objects);
-        for (int i = 0; i < objects.size(); ++i) {
-            mIdMap.put(objects.get(i), i);
+    public PlanetsArrayAdapter(Context context, List<Planet> planets) {
+        super(context, R.layout.planet_row, planets);
+        this.context = context;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Planet p = (Planet)getItem(position);
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.planet_row, parent, false);
+
+        // Set planet name
+        TextView textView = (TextView) rowView.findViewById(R.id.planetNameTextView);
+        textView.setText(p.name);
+
+        // Set planet production
+        textView = (TextView) rowView.findViewById(R.id.productionTextView);
+        textView.setText("Production: " + p.production);
+
+        // Set planet owner and color
+        if(p.colony != null) {
+            Player player = p.colony.player;
+            textView = (TextView) rowView.findViewById(R.id.ownerTextView);
+            textView.setText(player.name);
+            textView.setTextColor(player.color);
         }
+        return rowView;
     }
-
-    @Override
-    public long getItemId(int position) {
-        String item = getItem(position);
-        return mIdMap.get(item);
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
-
 }
-
 
 
