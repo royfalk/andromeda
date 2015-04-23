@@ -13,12 +13,10 @@ public class Planet {
     public Location location;
     public String name;
     public Colony colony;
-    static int c = 0;
     public ArrayList<Unit> units;
 
     Planet(boolean homePlanet) {
-        int a = 1900 + c++;
-        name = "A"+c;
+        name = PlanetFactory.getPlanetName();
         if(homePlanet) {
             production = AVG_PROD;
         } else {

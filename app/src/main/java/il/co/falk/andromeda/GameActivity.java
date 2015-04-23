@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
+import il.co.falk.andromeda.game.PlanetFactory;
 import il.co.falk.andromeda.game.UnitFactory;
 import il.co.falk.andromeda.game.Unit;
 import il.co.falk.andromeda.game.Universe;
@@ -37,6 +38,9 @@ public class GameActivity extends ActionBarActivity {
 
         // Init UnitFactory
         UnitFactory.getUnitFactory(this.getApplicationContext());
+
+        // Init PlanetFactory
+        new PlanetFactory(this.getApplicationContext());
 
         universe = Universe.getUniverse();
 
