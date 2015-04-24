@@ -30,11 +30,6 @@ import il.co.falk.andromeda.game.Universe;
  * Created by roy on 1/21/15.
  */
 public class StarMapView extends View {
-        //implements
-        //GestureDetector.OnGestureListener,
-        //GestureDetector.OnDoubleTapListener  {
-
-    //GestureDetector scrollGestureDetector;
 
     Paint paint;
 
@@ -45,7 +40,6 @@ public class StarMapView extends View {
     private float zoom;
 
     private static final String DEBUG_TAG = "star map gesture";
-    private static final int MARGIN = 10;
     private static final String[] PLANET_COLORS = {"#999999", "#FF9966", "#996633", "#99FF99", "#009999", "#00CC00"};
     private ScaleGestureDetector mScaleDetector;
     private GestureDetectorCompat mDetector;
@@ -69,108 +63,35 @@ public class StarMapView extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.GREEN);
 
-        //mDetector = new GestureDetectorCompat(context,this);
-        //mDetector.setOnDoubleTapListener(this);
-
-        //Universe u = Universe.getUniverse();
         lMap = new FRect(0,0,Universe.WIDTH, Universe.HEIGHT);
         lView = new FRect(lMap);
-
-        /*x = 0;
-        y = 0;
-        cx = 0;
-        cy = 0;*/
 
         zoom = 1;
 
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 
         mDetector = new GestureDetectorCompat(context, new SimpleGestureListener());
-
-
-        /*scrollGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onScroll(final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY) {
-                    System.out.println("SCROLL " + distanceX + ", " + distanceY);
-
-                    lView.move(distanceX/getWidth(), distanceY/getHeight());
-                    invalidate();
-                    return true;
-                }
-        });*/
     }
 
 
-    //public void initStarMapView(Context context, Universe universe, RelativeLayout relativeLayout, int width, int height) {
-    public void initStarMapView(Context context, Universe universe) {
 
-        /*planetLabels = new ArrayList<>();
-        planetIcons = new ArrayList<>();*/
-
-        /*for(Planet p : universe.planets) {
-            // create planet labels
-            TextView tv = new TextView(context);
-            tv.setText(p.name);
-            relativeLayout.addView(tv);
-            float x = width/104 * (1+p.location.x);
-            float y = height/104 * (1+p.location.y);
-            tv.setX(x);
-            tv.setY(y);
-            planetLabels.add(tv);
-            tv.setClickable(true);
-            tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TextView tv = (TextView)v;
-                    Log.d("clickclick", (String)tv.getText());
-                }
-            });
-
-            // create planet icons
-
-        }*/
-
-        // Custom Drawing
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.GREEN);
-        /*if (mTextHeight == 0) {
-            mTextHeight = mTextPaint.getTextSize();
-        } else {
-            mTextPaint.setTextSize(mTextHeight);
-        }
-
-        mPiePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPiePaint.setStyle(Paint.Style.FILL);
-        mPiePaint.setTextSize(mTextHeight);
-
-        mShadowPaint = new Paint(0);
-        mShadowPaint.setColor(0xff101010);
-        mShadowPaint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));*/
-
-    }
 
     protected void onDraw(Canvas canvas) {
         Universe universe = Universe.getUniverse();
-        float width = getWidth() - MARGIN*2;
-        float height = getHeight() - MARGIN*2;
-        //float gridX = width/universe.WIDTH;
-        //float gridY = height/universe.HEIGHT;
+        float width = getWidth();
+        float height = getHeight();
 
-        //setTextSizeForWidth(paint, 40, "dododo");
         paint.setTextSize(32);
 
         for(Planet p : universe.planets) {
             int planetColor = Color.parseColor(PLANET_COLORS[p.production]);
             paint.setColor(planetColor);
-            //float x = MARGIN + p.location.x * gridX * zoom;
-            //float y = MARGIN + p.location.y * gridY * zoom;
+
             if(!lView.contains(p.location.x, p.location.y)) continue;
 
-            float x = MARGIN + lView.getRelativeX(p.location.x, width);
-            float y = MARGIN + lView.getRelativeY(p.location.y, height);
+            float x = lView.getRelativeX(p.location.x, width);
+            float y = lView.getRelativeY(p.location.y, height);
 
-            //float x = MARGIN + width/(width+MARGIN) * (1+p.location.x) * zoom;
-            //float y = MARGIN + height/(height+MARGIN) * (1+p.location.y) * zoom;
 
             canvas.drawCircle(x,y,5 * lView.z, paint);
 
@@ -183,11 +104,8 @@ public class StarMapView extends View {
 
             Rect b = new Rect();
             paint.getTextBounds(p.name, 0 ,p.name.length(), b);
-            canvas.drawText(p.name, x-b.width()/2,y+ 5 * lView.z + 5, paint);
+            canvas.drawText(p.name, x-b.width()/2,y+ 5 * lView.z + 20, paint);
         }
-
-        //paint.setColor(Color.LTGRAY);
-        //canvas.drawRect(lView.getRect(), paint);
     }
 
 
@@ -217,20 +135,13 @@ public class StarMapView extends View {
             return true;
         }
 
-        /*@Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2,
-                               float velocityX, float velocityY) {
-            Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
-            return true;
-        }*/
-
         @Override
         public boolean onSingleTapConfirmed(MotionEvent event) {
             Log.d("Tap", "tap");
 
             Universe universe = Universe.getUniverse();
-            float width = getWidth() - MARGIN*2;
-            float height = getHeight() - MARGIN*2;
+            float width = getWidth();
+            float height = getHeight();
 
             for(Planet p : universe.planets) {
                 if (!lView.contains(p.location.x, p.location.y)) continue;
@@ -238,8 +149,8 @@ public class StarMapView extends View {
                 float x = event.getX();
                 float y = event.getY();
 
-                float px = MARGIN + lView.getRelativeX(p.location.x, width);
-                float py = MARGIN + lView.getRelativeY(p.location.y, height);
+                float px = lView.getRelativeX(p.location.x, width);
+                float py = lView.getRelativeY(p.location.y, height);
 
                 float radius = 5 * lView.z;
 
@@ -273,7 +184,10 @@ public class StarMapView extends View {
             Universe universe = Universe.getUniverse();
 
             float z = detector.getScaleFactor();
-            lView.zoom(z);
+            float px = detector.getFocusX()/getWidth();
+            float py = detector.getFocusY()/getHeight();
+
+            lView.zoom(z, px, py);
 
             invalidate();
             return true;
@@ -284,7 +198,7 @@ public class StarMapView extends View {
 
 class FRect {
     public float x,y, w, h, origX, origY, origW, origH, z;
-    public final float MIN_ZOOM = 1, MAX_ZOOM = 16;
+    public final float MIN_ZOOM = 1, MAX_ZOOM = 4;
 
     FRect(float x,float y,float w,float h) {
         origX = this.x = x;
@@ -307,13 +221,14 @@ class FRect {
         return true;
     }
 
-    public void zoom(float zfactor) {
+    public void zoom(float zfactor, float pX, float pY) {
         z *= zfactor;
         if(z < MIN_ZOOM) z = MIN_ZOOM;
         if(z > MAX_ZOOM) z = MAX_ZOOM;
 
-        float cx = (x+w)/2;
-        float cy = (y+h)/2;
+        // TODO: This still isn't perfect but much better
+        float cx = x+pX*w;
+        float cy = y+pY*y;
         w = origW / z;
         h = origH / z;
 
@@ -345,12 +260,18 @@ class FRect {
     }
 
     public float getRelativeX(float aX, float actualWidth) {
-        if(aX<x || aX>x+w) return -1;
+        if(aX<x || aX>x+w) {
+            Log.e("ERROR", "getRelativeX");
+            return -1;
+        }
         return (aX-x)/w*actualWidth;
     }
 
     public float getRelativeY(float aY, float actualheight) {
-        if(aY<x || aY>y+h) return -1;
+        if(aY<y || aY>y+h) {
+            Log.e("ERROR", "getRelativeY");
+            return -1;
+        }
         return (aY-y)/h*actualheight;
     }
 }
