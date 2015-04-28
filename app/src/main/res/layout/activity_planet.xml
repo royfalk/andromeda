@@ -1,45 +1,170 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="il.co.falk.andromeda.PlanetActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:useDefaultMargins="true"
+    android:alignmentMode="alignBounds"
+    android:columnOrderPreserved="false"
+
+    android:columnCount="3"
+
+    android:background="#000000"
+    >
+
+    <!-- Header -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="Planet Name"
         android:id="@+id/planetName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textColor="#32FF32"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:textStyle="bold" />
 
+    <Space
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_gravity="fill"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Uninhabited!"
+        android:gravity="right"
+        android:textColor="#cccccc"
+        android:id="@+id/ownerTextView"
+        android:layout_row="0"
+        android:layout_column="2"
+        android:layout_gravity="right" />
+
+    <!-- Divider
+    android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        -->
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="@color/material_blue_grey_950"
+        android:background="#32FF32"
         android:id="@+id/div1"
-        android:layout_below="@+id/planetName"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_row="1"
+        android:layout_columnSpan="3" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Production:"
+        android:textColor="#cccccc"
+        android:layout_row="3"
+        android:layout_column="0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/production"
-        android:layout_below="@+id/planetName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="change_me"
+        android:textColor="#cccccc"
+        android:layout_row="3"
+        android:layout_column="2"
+        android:layout_gravity="right"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Currently Producing"
+        android:textColor="#cccccc"
+        android:layout_row="4"
+        android:layout_column="0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/currentlyProducing"
+        android:text="change_me"
+        android:textColor="#cccccc"
+        android:layout_row="4"
+        android:layout_column="2"
+        android:layout_gravity="right"
+        android:textStyle="bold"
+        android:onClick="onSelectProduct" />
+
+
+    <!-- Header - Buildings -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textView2"
+        android:layout_row="4"
+        android:layout_column="2" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/currentlyProducing"
-        android:layout_below="@+id/production"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:text="Buildings"
+        android:textColor="#32FF32"
+        android:layout_row="5"
+        android:layout_column="0" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#32FF32"
+        android:layout_row="6"
+        android:layout_columnSpan="3" />
+
+    <!-- Header - Defences -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Defences"
+        android:textColor="#32FF32"
+        android:layout_row="7"
+        android:layout_column="0" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#32FF32"
+        android:layout_row="8"
+        android:layout_columnSpan="3" />
+
+    <!-- Header - Ships -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ships"
+        android:textColor="#32FF32"
+        android:layout_row="9"
+        android:layout_column="0" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#32FF32"
+        android:layout_row="10"
+        android:layout_columnSpan="3" />
+
+
+
+
+</GridLayout>
+

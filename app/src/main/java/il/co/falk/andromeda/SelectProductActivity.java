@@ -16,6 +16,8 @@ import il.co.falk.andromeda.game.UnitFactory;
 
 
 public class SelectProductActivity extends ActionBarActivity {
+    public static final int ACTIVITY_CODE=37;
+    public static final String PRODUCT="PRODUCT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class SelectProductActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i=new Intent();
-                    i.putExtra("product",u);
+                    i.putExtra(PRODUCT,u);
                     setResult(RESULT_OK,i);
                     finish();
                 }

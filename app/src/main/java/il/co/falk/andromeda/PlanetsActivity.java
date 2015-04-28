@@ -1,6 +1,8 @@
 package il.co.falk.andromeda;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,22 +36,28 @@ public class PlanetsActivity extends ActionBarActivity {
 
         final PlanetsArrayAdapter adapter = new PlanetsArrayAdapter(this,universe.planets);
         listview.setAdapter(adapter);
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
+                final Planet p = (Planet) parent.getItemAtPosition(position);
+                Intent intent = new Intent(adapter.context, PlanetActivity.class);
+                intent.putExtra(PlanetActivity.PLANET_NAME, p.name);
+
+                adapter.context.startActivity(intent);
+
+
+                /*view.animate().setDuration(2000).alpha(0)
                         .withEndAction(new Runnable() {
                             @Override
                             public void run() {
                                 /*list.remove(item);
                                 adapter.notifyDataSetChanged();
-                                view.setAlpha(1);*/
+                                view.setAlpha(1);*//*
+
                             }
-                        });
+                        });*/
             }
 
         });
@@ -77,12 +85,20 @@ public class PlanetsActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void viewPlanet(final Planet planet) {
+        Context context = getApplicationContext();
+        Intent intent = new Intent(context, PlanetActivity.class);
+        intent.putExtra(PlanetActivity.PLANET_NAME, planet.name);
+
+        context.startActivity(intent);
+    }
 }
 
 
 
 class PlanetsArrayAdapter extends ArrayAdapter<Planet> {
-    private final Context context;
+    public final Context context;
 
     public PlanetsArrayAdapter(Context context, List<Planet> planets) {
         super(context, R.layout.planet_row, planets);

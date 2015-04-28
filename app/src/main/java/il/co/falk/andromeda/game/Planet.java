@@ -2,6 +2,7 @@ package il.co.falk.andromeda.game;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.jar.Attributes;
 
 /**
  * Created by roy on 1/2/15.
@@ -16,7 +17,7 @@ public class Planet {
     public ArrayList<Unit> units;
 
     Planet(boolean homePlanet) {
-        name = PlanetFactory.getPlanetName();
+        name = NamesFactory.getPlanetName();
         if(homePlanet) {
             production = AVG_PROD;
         } else {

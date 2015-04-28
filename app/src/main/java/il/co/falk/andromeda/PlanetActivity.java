@@ -1,13 +1,19 @@
 package il.co.falk.andromeda;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import il.co.falk.andromeda.game.Planet;
+import il.co.falk.andromeda.game.Player;
+import il.co.falk.andromeda.game.UnitFactory;
 import il.co.falk.andromeda.game.Universe;
 
 
@@ -16,7 +22,7 @@ public class PlanetActivity extends ActionBarActivity {
 
     Planet planet;
 
-    TextView planetNameView, productionView, currentlyProducingView;
+    TextView planetNameView, productionView, currentlyProducingView, owner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +38,18 @@ public class PlanetActivity extends ActionBarActivity {
         planetNameView.setText(name);
 
         productionView = (TextView)findViewById(R.id.production);
-        productionView.setText("Production: " + planet.production);
+        productionView.setText(String.valueOf(planet.production));
 
         currentlyProducingView = (TextView)findViewById(R.id.currentlyProducing);
-        currentlyProducingView.setText("Currently Producing: ");
+        currentlyProducingView.setText(planet.colony.currentlyBuilding.name);
+
+        // Set planet owner and color
+        if(planet.colony != null) {
+            Player player = planet.colony.player;
+            owner = (TextView) findViewById(R.id.ownerTextView);
+            owner.setText(player.name);
+            owner.setTextColor(player.color);
+        }
     }
 
 
@@ -59,5 +73,23 @@ public class PlanetActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onSelectProduct(View view) {
+        Intent intent = new Intent(this, SelectProductActivity.class);
+        startActivityForResult(intent, SelectProductActivity.ACTIVITY_CODE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SelectProductActivity.ACTIVITY_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                planet.colony.currentlyBuilding = UnitFactory.getUnitFactory().getUnit(data.getStringExtra(SelectProductActivity.PRODUCT), planet.location);
+                currentlyProducingView.setText(planet.colony.currentlyBuilding.name);
+            }
+        }
+
+
     }
 }

@@ -23,7 +23,7 @@ public class Player {
         colonies = new ArrayList<Colony>();
         units = new ArrayList<Unit>();
         Color c = new Color();
-        name = String.valueOf(numPlayers);
+        name = NamesFactory.getRaceName();
         color = PLAYER_COLORS[numPlayers++];
     }
 

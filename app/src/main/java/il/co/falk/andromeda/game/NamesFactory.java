@@ -18,13 +18,16 @@ import java.util.Random;
 /**
  * Created by roy on 4/23/15.
  */
-public class PlanetFactory {
+public class NamesFactory {
 
-    private static PlanetFactory planetFactory;
+    private static NamesFactory namesFactory;
     private ArrayList<String> planetNames;
+    private ArrayList<String> racesNames;
 
-    public PlanetFactory(Context context) {
+    public NamesFactory(Context context) {
         planetNames = new ArrayList<>();
+        racesNames = new ArrayList<>();
+
         AssetManager assetManager = context.getAssets();
         try {
             InputStream is = assetManager.open("planets");
@@ -34,18 +37,36 @@ public class PlanetFactory {
             while((line = in.readLine()) != null) {
                 planetNames.add(line);
             }
+
+            is = assetManager.open("races");
+            in = new BufferedReader(new InputStreamReader(is));
+            line = null;
+
+            while((line = in.readLine()) != null) {
+                racesNames.add(line);
+            }
+
         } catch(Exception e) {
             e.printStackTrace();
         }
 
-        planetFactory = this;
+        namesFactory = this;
     }
 
+    // TODO: add check not empty
     public static String getPlanetName() {
-        if(planetFactory == null) return null;
+        if(namesFactory == null) return null;
         Random r = new Random();
-        int i = r.nextInt(planetFactory.planetNames.size());
-        String s = planetFactory.planetNames.remove(i);
+        int i = r.nextInt(namesFactory.planetNames.size());
+        String s = namesFactory.planetNames.remove(i);
+        return s;
+    }
+
+    public static String getRaceName() {
+        if(namesFactory == null) return null;
+        Random r = new Random();
+        int i = r.nextInt(namesFactory.racesNames.size());
+        String s = namesFactory.racesNames.remove(i);
         return s;
     }
 
