@@ -14,7 +14,7 @@ public class Player {
     static int numPlayers = 0;
 
     ArrayList<Planet> knownPlanets;
-    ArrayList<Colony> colonies;
+    public ArrayList<Colony> colonies;
     ArrayList<Unit> units;
     public int color;
     public String name;

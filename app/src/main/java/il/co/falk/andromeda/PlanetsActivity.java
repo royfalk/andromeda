@@ -25,17 +25,31 @@ import il.co.falk.andromeda.game.Universe;
 
 
 public class PlanetsActivity extends ActionBarActivity {
+    public static final String LIST_TYPE = "LIST_TYPE";
+    public static final String LIST_TYPE_COLONIES = "LIST_TYPE_COLONIES";
+    public static final String LIST_TYPE_PLANETS = "LIST_TYPE_PLANETS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planets);
 
+        Intent intent = getIntent();
+        String type = intent.getStringExtra(PlanetsActivity.LIST_TYPE);
+
         final ListView listview = (ListView) findViewById(R.id.listview);
         Universe universe = Universe.getUniverse();
 
-        final PlanetsArrayAdapter adapter = new PlanetsArrayAdapter(this,universe.planets);
+        PlanetsArrayAdapter tempAdapter;
+        if(type.equals(LIST_TYPE_COLONIES)) {
+            tempAdapter = new PlanetsArrayAdapter(this, universe.getPlanetsByPlayer(universe.player));
+        } else {
+            tempAdapter = new PlanetsArrayAdapter(this, universe.planets);
+        }
+
+        final PlanetsArrayAdapter adapter = tempAdapter;
         listview.setAdapter(adapter);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

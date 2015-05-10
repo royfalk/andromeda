@@ -116,4 +116,12 @@ public class Universe {
         return planets;
     }
 
+    public ArrayList<Planet> getPlanetsByPlayer(Player player) {
+        ArrayList<Planet> planets = new ArrayList<>();
+
+        for(Colony c :  player.colonies)
+            planets.add(c.planet);
+        return planets;
+    }
+
 }
