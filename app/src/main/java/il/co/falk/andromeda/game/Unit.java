@@ -11,7 +11,7 @@ public class Unit {
     int maxHP;
     int attack;
     int hp;
-    int cost;
+    public int cost;
     public Location location;
     public Location destination;
 

@@ -9,7 +9,7 @@ public class Colony {
     public Player player;
     public Planet planet;
 
-    int queue;
+    public int queue;
     public Unit currentlyBuilding;
 
     Colony(Player player, Planet planet) {

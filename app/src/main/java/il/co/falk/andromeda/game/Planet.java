@@ -10,7 +10,10 @@ import java.util.jar.Attributes;
 public class Planet {
     public final static int MAX_SIZE = 5, AVG_SIZE = 3;
     public final static int MAX_PROD = 5, AVG_PROD = 3;
+
     public int production;
+    public float terraforming;
+
     public Location location;
     public String name;
     public Colony colony;
@@ -23,6 +26,7 @@ public class Planet {
         } else {
             Random r = new Random();
             production = r.nextInt(MAX_PROD);
+            terraforming = r.nextFloat();
         }
 
         location = new Location();

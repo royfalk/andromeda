@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.Player;
 import il.co.falk.andromeda.game.UnitFactory;
@@ -22,7 +23,7 @@ public class PlanetActivity extends ActionBarActivity {
 
     Planet planet;
 
-    TextView planetNameView, productionView, currentlyProducingView, owner;
+    TextView planetNameView, productionView, currentlyProducingView, owner, remaining, turns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +44,22 @@ public class PlanetActivity extends ActionBarActivity {
         currentlyProducingView = (TextView)findViewById(R.id.currentlyProducing);
         currentlyProducingView.setText(planet.colony.currentlyBuilding.name);
 
+        remaining = (TextView)findViewById(R.id.remaining);
+        remaining.setText("");
+
+        turns = (TextView)findViewById(R.id.turns);
+        turns.setText("");
+
         // Set planet owner and color
         if(planet.colony != null) {
             Player player = planet.colony.player;
             owner = (TextView) findViewById(R.id.ownerTextView);
             owner.setText(player.name);
             owner.setTextColor(player.color);
+
+            Colony c = planet.colony;
+            remaining.setText(c.queue + "/" + c.currentlyBuilding.cost);
+            turns.setText(c.getRemainingTurns() + " turns");
         }
     }
 

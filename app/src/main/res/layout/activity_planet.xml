@@ -99,6 +99,29 @@
         android:textStyle="bold"
         android:onClick="onSelectProduct" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="temp"
+        android:id="@+id/remaining"
+        android:textColor="#cccccc"
+        android:layout_row="5"
+        android:layout_column="0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/turns"
+        android:text="change_me"
+        android:textColor="#cccccc"
+        android:layout_row="5"
+        android:layout_column="2"
+        android:layout_gravity="right"
+        android:textStyle="bold"
+        android:onClick="onSelectProduct" />
+
 
     <!-- Header - Buildings -->
     <TextView
@@ -107,7 +130,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/textView2"
-        android:layout_row="4"
+        android:layout_row="6"
         android:layout_column="2" />
 
     <TextView
@@ -115,24 +138,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Buildings"
-        android:textColor="#32FF32"
-        android:layout_row="5"
-        android:layout_column="0" />
-
-    <!-- Divider -->
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="#32FF32"
-        android:layout_row="6"
-        android:layout_columnSpan="3" />
-
-    <!-- Header - Defences -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Defences"
         android:textColor="#32FF32"
         android:layout_row="7"
         android:layout_column="0" />
@@ -145,12 +150,12 @@
         android:layout_row="8"
         android:layout_columnSpan="3" />
 
-    <!-- Header - Ships -->
+    <!-- Header - Defences -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ships"
+        android:text="Defences"
         android:textColor="#32FF32"
         android:layout_row="9"
         android:layout_column="0" />
@@ -161,6 +166,24 @@
         android:layout_height="1dp"
         android:background="#32FF32"
         android:layout_row="10"
+        android:layout_columnSpan="3" />
+
+    <!-- Header - Ships -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ships"
+        android:textColor="#32FF32"
+        android:layout_row="11"
+        android:layout_column="0" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#32FF32"
+        android:layout_row="12"
         android:layout_columnSpan="3" />
 
 

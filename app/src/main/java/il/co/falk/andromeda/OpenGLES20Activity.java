@@ -9,6 +9,7 @@ import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.FloatMath;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -284,12 +285,12 @@ class Square {
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
     static float squareCoords[] = {
-            -0.5f,  0.5f, 0.0f,   // top left
+            -0.5f, 0.5f, 0.0f,   // top left
             -0.5f, -0.5f, 0.0f,   // bottom left
             0.5f, -0.5f, 0.0f,   // bottom right
-            0.5f,  0.5f, 0.0f }; // top right
+            0.5f, 0.5f, 0.0f}; // top right
 
-    private short drawOrder[] = { 0, 1, 2, 0, 2, 3 }; // order to draw vertices
+    private short drawOrder[] = {0, 1, 2, 0, 2, 3}; // order to draw vertices
 
     public Square() {
         // initialize vertex byte buffer for shape coordinates
@@ -310,4 +311,5 @@ class Square {
         drawListBuffer.put(drawOrder);
         drawListBuffer.position(0);
     }
+
 }

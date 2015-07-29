@@ -1,0 +1,47 @@
+{
+  "Manufacturing": {
+    "Workshops": {
+      "Manufacturing": 1.5,
+      "Pollution": 0.1,
+      "Tech": 1,
+      "Cost": 100
+    },
+    "Factories": {
+      "Manufacturing": 2.0,
+      "Pollution": 0.3,
+      "Tech": 2,
+      "Cost": 200
+    },
+    "Production Lines": {
+      "Manufacturing": 3.0,
+      "Pollution": 0.5,
+      "Tech": 3,
+      "Cost": 400
+    },
+    "Robotic Factories": {
+      "Manufacturing": 6.0,
+      "Pollution": 1.0,
+      "Tech": 4,
+      "Cost": 1200
+    },
+    "3D Printers": {
+      "Manufacturing": 4.5,
+      "Pollution": 0.3,
+      "Tech": 5,
+      "Cost": 400
+    },
+    "Nano-Technology": {
+      "Manufacturing": 8,
+      "Pollution": 0.1,
+      "Tech": 6,
+      "Cost": 4800
+    }
+  },
+  "Construction" : {
+    "Steel" : {
+      "Manufacturing" : 1.5,
+      "Tech" : 1,
+      "Cost" : 100
+    }
+  }
+}
