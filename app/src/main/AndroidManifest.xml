@@ -40,6 +40,10 @@
             android:name=".PlanetsActivity"
             android:label="@string/title_activity_planets" >
         </activity>
+        <activity
+            android:name=".TechActivity"
+            android:label="@string/title_activity_tech" >
+        </activity>
     </application>
 
 </manifest>

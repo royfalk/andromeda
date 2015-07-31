@@ -18,6 +18,7 @@ public class Player {
     ArrayList<Unit> units;
     public int color;
     public String name;
+    public TechManager techManager;
 
     Player() {
         colonies = new ArrayList<Colony>();
@@ -25,6 +26,7 @@ public class Player {
         Color c = new Color();
         name = NamesFactory.getRaceName();
         color = PLAYER_COLORS[numPlayers++];
+        techManager = new TechManager();
     }
 
     public void nextTurn() {

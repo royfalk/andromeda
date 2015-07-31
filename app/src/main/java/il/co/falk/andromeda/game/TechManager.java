@@ -38,25 +38,41 @@ public class TechManager {
             default: return -1;
         }
     }
+
+    public int getRemaining(Field field) {
+        switch (field) {
+            case RESEARCH: return research.getRemaining();
+            case MANUFACTURING: return manufacturing.getRemaining();
+            case ARMOR: return armor.getRemaining();
+            case BEAM: return beam.getRemaining();
+            case MISSILE: return missile.getRemaining();
+            default: return -1;
+        }
+    }
 }
 
 class Tech {
     private final int RESEARCH_LEVEL = 100;
     double ratio;
-    int level, effort;
+    int level, effort, remaining;
 
     public Tech(double ratio) {
         this.ratio = ratio;
         level = 0;
         effort = 0;
+        remaining = RESEARCH_LEVEL * 2^level;
     }
 
     public void research(int effort) {
         this.effort = (int)ratio * effort;
-        int toNextLevel = RESEARCH_LEVEL * 2^level;
-        if(effort > toNextLevel)
+        remaining = RESEARCH_LEVEL * 2^level;
+        if(effort > remaining) {
             level++;
+            remaining = RESEARCH_LEVEL * 2^level;
+        }
     }
 
     public int getLevel() { return level; }
+
+    public int getRemaining() { return remaining; }
 }

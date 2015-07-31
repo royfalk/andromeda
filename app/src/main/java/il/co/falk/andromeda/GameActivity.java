@@ -168,6 +168,11 @@ public class GameActivity extends ActionBarActivity {
     public void onRaces(View view) {
     }
 
+    public void onTech(View view) {
+        Intent intent = new Intent(this, TechActivity.class);
+        startActivity(intent);
+    }
+
     public void onNextTurn(View view) {
         universe.nextTurn();
         updateGUI();
