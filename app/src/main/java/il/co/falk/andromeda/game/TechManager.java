@@ -54,25 +54,26 @@ public class TechManager {
 class Tech {
     private final int RESEARCH_LEVEL = 100;
     double ratio;
-    int level, effort, remaining;
+    int level, effort, toNextLevel;
 
     public Tech(double ratio) {
         this.ratio = ratio;
         level = 0;
         effort = 0;
-        remaining = RESEARCH_LEVEL * 2^level;
+        toNextLevel = RESEARCH_LEVEL * (int)Math.pow(2,level);
     }
 
     public void research(int effort) {
-        this.effort = (int)ratio * effort;
-        remaining = RESEARCH_LEVEL * 2^level;
-        if(effort > remaining) {
+        this.effort += (int)(ratio * effort);
+
+        if(toNextLevel <= this.effort) {
+            this.effort -= toNextLevel;
             level++;
-            remaining = RESEARCH_LEVEL * 2^level;
+            toNextLevel = RESEARCH_LEVEL * (int)Math.pow(2,level);
         }
     }
 
     public int getLevel() { return level; }
 
-    public int getRemaining() { return remaining; }
+    public int getRemaining() { return toNextLevel - this.effort; }
 }

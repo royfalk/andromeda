@@ -174,6 +174,7 @@ public class GameActivity extends ActionBarActivity {
     }
 
     public void onNextTurn(View view) {
+        Log.d("Andromeda", "Next Turn");
         universe.nextTurn();
         updateGUI();
     }

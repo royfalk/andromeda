@@ -23,6 +23,7 @@ public class Colony {
     }
 
     public void nextTurn() {
+        research();
         build();
     }
 
@@ -35,6 +36,11 @@ public class Colony {
             player.units.add(currentlyBuilding);
             currentlyBuilding = new Unit(currentlyBuilding);
         }
+    }
+
+    void research() {
+        // TODO: something more meaningful here
+        player.techManager.research(10);
     }
 
     public int getRemainingTurns() {
