@@ -9,11 +9,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.List;
 
 import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.Player;
+import il.co.falk.andromeda.game.Unit;
 import il.co.falk.andromeda.game.UnitFactory;
 import il.co.falk.andromeda.game.Universe;
 
@@ -61,6 +69,37 @@ public class PlanetActivity extends ActionBarActivity {
             remaining.setText(c.queue + "/" + c.currentlyBuilding.cost);
             turns.setText(c.getRemainingTurns() + " turns");
         }
+
+
+        final ListView listview = (ListView) findViewById(R.id.planetaryDefensesListview);
+        final UnitArrayAdapter adapter = new UnitArrayAdapter(getApplicationContext(), planet.units);
+        listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final Planet p = (Planet) parent.getItemAtPosition(position);
+                Intent intent = new Intent(adapter.context, PlanetActivity.class);
+                intent.putExtra(PlanetActivity.PLANET_NAME, p.name);
+
+                adapter.context.startActivity(intent);
+
+
+                /*view.animate().setDuration(2000).alpha(0)
+                        .withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                /*list.remove(item);
+                                adapter.notifyDataSetChanged();
+                                view.setAlpha(1);*//*
+
+                            }
+                        });*/
+            }
+
+        });
     }
 
 
@@ -96,11 +135,42 @@ public class PlanetActivity extends ActionBarActivity {
 
         if (requestCode == SelectProductActivity.ACTIVITY_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                planet.colony.currentlyBuilding = UnitFactory.getUnitFactory().getUnit(data.getStringExtra(SelectProductActivity.PRODUCT), planet.location);
+                planet.colony.currentlyBuilding = UnitFactory.getUnitFactory().getUnit(data.getStringExtra(SelectProductActivity.PRODUCT), planet.location, planet.colony.player);
                 currentlyProducingView.setText(planet.colony.currentlyBuilding.name);
             }
         }
 
 
+    }
+
+
+    class UnitArrayAdapter extends ArrayAdapter<Unit> {
+        public final Context context;
+
+        public UnitArrayAdapter(Context context, List<Unit> units) {
+            super(context, R.layout.unit_row, units);
+            this.context = context;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Unit u = (Unit)getItem(position);
+
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View rowView = inflater.inflate(R.layout.unit_row, parent, false);
+
+            // Set planet name
+            TextView textView = (TextView) rowView.findViewById(R.id.unitNameTextView);
+            textView.setText(u.name);
+
+            // Set planet production
+            ProgressBar hpBar = (ProgressBar) rowView.findViewById(R.id.hpBar);
+            hpBar.setProgress(u.hp);
+
+            // TODO: enemy ships
+
+            return rowView;
+        }
     }
 }

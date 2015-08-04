@@ -21,9 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
+import il.co.falk.andromeda.game.Player;
+import il.co.falk.andromeda.game.Unit;
 import il.co.falk.andromeda.game.Universe;
 
 /**
@@ -83,32 +86,60 @@ public class StarMapView extends View {
 
         paint.setTextSize(32);
 
-        for(Planet p : universe.planets) {
-            int planetColor = Color.parseColor(PLANET_COLORS[p.production]);
-            paint.setColor(planetColor);
-
-            if(!lView.contains(p.location.x, p.location.y)) continue;
-
-            float x = lView.getRelativeX(p.location.x, width);
-            float y = lView.getRelativeY(p.location.y, height);
-
-
-            canvas.drawCircle(x,y,5 * lView.z, paint);
-
-            if(p.colony != null)
-                paint.setColor(p.colony.player.color);
-            else
-                paint.setColor(Color.LTGRAY);
-            // TODO: x-y depending on length of planet name
-
-
-            Rect b = new Rect();
-            paint.getTextBounds(p.name, 0 ,p.name.length(), b);
-            canvas.drawText(p.name, x-b.width()/2,y+ 5 * lView.z + 20, paint);
+        for(Planet planet : universe.planets) {
+            if(!lView.contains(planet.location.x, planet.location.y)) continue;
+            drawPlanet(canvas, width, height, planet);
+            drawPlanetLabel(canvas, width, height, planet);
+            drawShipsInOrbit(canvas, width, height, planet);
         }
     }
 
+    void drawPlanet(Canvas canvas, float width, float height, Planet planet) {
+        int planetColor = Color.parseColor(PLANET_COLORS[planet.production]);
+        paint.setColor(planetColor);
 
+        float x = lView.getRelativeX(planet.location.x, width);
+        float y = lView.getRelativeY(planet.location.y, height);
+
+        canvas.drawCircle(x, y, 5 * lView.z, paint);
+    }
+
+    void drawPlanetLabel(Canvas canvas, float width, float height, Planet planet) {
+        float x = lView.getRelativeX(planet.location.x, width);
+        float y = lView.getRelativeY(planet.location.y, height);
+
+        if(planet.colony != null)
+            paint.setColor(planet.colony.player.color);
+        else
+            paint.setColor(Color.LTGRAY);
+        // TODO: x-y depending on length of planet name
+
+        Rect b = new Rect();
+        paint.getTextBounds(planet.name, 0 ,planet.name.length(), b);
+        canvas.drawText(planet.name, x - b.width() / 2, y + 5 * lView.z + 20, paint);
+    }
+
+    void drawShipsInOrbit(Canvas canvas, float width, float height, Planet planet) {
+        if(planet.units.size() == 0) return;
+
+        List<Player> presentPlayers = new ArrayList<>();
+        for(Unit u : planet.units)
+            if(!presentPlayers.contains(u.player)) presentPlayers.add(u.player);
+
+        if(presentPlayers.size()==1)
+            paint.setColor(presentPlayers.get(0).color);
+        else
+            paint.setColor(Color.WHITE);
+
+        float x = lView.getRelativeX(planet.location.x, width);
+        float y = lView.getRelativeY(planet.location.y, height);
+
+        canvas.drawRect(x - height, y - height, 5 * lView.z, 5 * lView.z, paint);
+    }
+
+    void drawShipsInTransit(Canvas canvas, float width, float height, Planet planet) {
+
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////

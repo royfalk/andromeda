@@ -43,7 +43,7 @@ public class UnitFactory {
         return unitFactory;
     }
 
-    public Unit getUnit(String unitName, Location location) {
+    public Unit getUnit(String unitName, Location location, Player player) {
         try {
             for(int i=0;i<jsonArray.length();i++) {
                 Log.d("JSON", "Array Object");
@@ -55,7 +55,7 @@ public class UnitFactory {
                 int hp = object.getInt("hp");
                 int attack = object.getInt("attack");
                 int cost = object.getInt("cost");
-                Unit u = new Unit(name, move, hp, attack, cost, location);
+                Unit u = new Unit(name, move, hp, attack, cost, location, player);
                 return u;
             }
         } catch(Exception e) {

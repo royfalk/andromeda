@@ -17,7 +17,7 @@ public class Colony {
         this.planet = planet;
         queue = 0;
 
-        currentlyBuilding = UnitFactory.getUnitFactory().getUnit("Missile Base", planet.location);
+        currentlyBuilding = UnitFactory.getUnitFactory().getUnit("Missile Base", planet.location, player);
         //currentlyBuilding = new Unit("Trade Goods", 0,0,0,999, planet.location);
         planet.colony = this;
     }
@@ -28,19 +28,24 @@ public class Colony {
     }
 
     void build() {
-        queue += planet.production;
+        queue += planet.production + player.techManager.manufacturing.getLevel();
 
         if(queue >= currentlyBuilding.cost) {
             queue -= currentlyBuilding.cost;
             planet.units.add(currentlyBuilding);
             player.units.add(currentlyBuilding);
             currentlyBuilding = new Unit(currentlyBuilding);
+
+            // Apply Technology Bonuses
+            currentlyBuilding.hp += player.techManager.armor.getLevel();
+            if(currentlyBuilding.name.equals("Missile Base")) currentlyBuilding.attack += player.techManager.missile.getLevel();
+            if(currentlyBuilding.name.equals("Destroyer")) currentlyBuilding.attack += player.techManager.beam.getLevel();
         }
     }
 
     void research() {
         // TODO: something more meaningful here
-        player.techManager.research(10);
+        player.techManager.research(10+ player.techManager.research.getLevel());
     }
 
     public int getRemainingTurns() {

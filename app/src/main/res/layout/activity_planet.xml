@@ -62,7 +62,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Production:"
         android:textColor="#cccccc"
-        android:layout_row="3"
+        android:layout_row="2"
         android:layout_column="0" />
 
     <TextView
@@ -72,7 +72,7 @@
         android:id="@+id/production"
         android:text="change_me"
         android:textColor="#cccccc"
-        android:layout_row="3"
+        android:layout_row="2"
         android:layout_column="2"
         android:layout_gravity="right"
         android:textStyle="bold" />
@@ -83,7 +83,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Currently Producing"
         android:textColor="#cccccc"
-        android:layout_row="4"
+        android:layout_row="3"
         android:layout_column="0" />
 
     <TextView
@@ -93,7 +93,7 @@
         android:id="@+id/currentlyProducing"
         android:text="change_me"
         android:textColor="#cccccc"
-        android:layout_row="4"
+        android:layout_row="3"
         android:layout_column="2"
         android:layout_gravity="right"
         android:textStyle="bold"
@@ -103,10 +103,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="temp"
+        android:text="remaining"
         android:id="@+id/remaining"
         android:textColor="#cccccc"
-        android:layout_row="5"
+        android:layout_row="4"
         android:layout_column="0" />
 
     <TextView
@@ -116,7 +116,7 @@
         android:id="@+id/turns"
         android:text="change_me"
         android:textColor="#cccccc"
-        android:layout_row="5"
+        android:layout_row="4"
         android:layout_column="2"
         android:layout_gravity="right"
         android:textStyle="bold"
@@ -127,19 +127,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textView2"
-        android:layout_row="6"
-        android:layout_column="2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Buildings"
         android:textColor="#32FF32"
-        android:layout_row="7"
+        android:layout_row="10"
+        android:layout_column="0" />
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/buildingsListview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="11"
         android:layout_column="0" />
 
     <!-- Divider -->
@@ -147,7 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="#32FF32"
-        android:layout_row="8"
+        android:layout_row="19"
         android:layout_columnSpan="3" />
 
     <!-- Header - Defences -->
@@ -157,15 +154,20 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Defences"
         android:textColor="#32FF32"
-        android:layout_row="9"
+        android:layout_row="20"
         android:layout_column="0" />
-
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/planetaryDefensesListview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="21"
+        android:layout_column="0" />
     <!-- Divider -->
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="#32FF32"
-        android:layout_row="10"
+        android:layout_row="29"
         android:layout_columnSpan="3" />
 
     <!-- Header - Ships -->
@@ -175,15 +177,21 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Ships"
         android:textColor="#32FF32"
-        android:layout_row="11"
+        android:layout_row="30"
         android:layout_column="0" />
 
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/shipListview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="31"
+        android:layout_column="0" />
     <!-- Divider -->
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="#32FF32"
-        android:layout_row="12"
+        android:layout_row="39"
         android:layout_columnSpan="3" />
 
 

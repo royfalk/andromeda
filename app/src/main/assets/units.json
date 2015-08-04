@@ -1,30 +1,34 @@
 [
-    {
-        "name" : "Missile Base",
-        "move" : 0,
-        "hp" : 24,
-        "attack" : 3,
-        "cost" : 15
-    },
-    {
-        "name" : "Colony Ship",
-        "move" : 3,
-        "hp" : 100,
-        "attack" : 0,
-        "cost" : 100
-    },
-    {
-        "name" : "Scout",
-        "move" : 10,
-        "hp" : 3,
-        "attack" : 1,
-        "cost" : 3
-    },
-    {
-        "name" : "Destroyer",
-                "move" : 6,
-                "hp" : 20,
-                "attack" : 4,
-                "cost" : 15
-   }
+  {
+    "name" : "Missile Base",
+    "type" : "planetary defense",
+    "move" : 0,
+    "hp" : 24,
+    "attack" : 3,
+    "cost" : 15
+  },
+  {
+    "name" : "Colony Ship",
+    "type" : "ship",
+    "move" : 3,
+    "hp" : 100,
+    "attack" : 0,
+    "cost" : 100
+  },
+  {
+    "name" : "Scout",
+    "type" : "ship",
+    "move" : 10,
+    "hp" : 3,
+    "attack" : 1,
+    "cost" : 3
+  },
+  {
+    "name" : "Destroyer",
+    "type" : "ship",
+    "move" : 6,
+    "hp" : 20,
+    "attack" : 4,
+    "cost" : 15
+  }
 ]

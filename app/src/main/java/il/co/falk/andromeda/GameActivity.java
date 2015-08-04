@@ -141,7 +141,7 @@ public class GameActivity extends ActionBarActivity {
             if (resultCode == RESULT_OK) {
                 String unitName = data.getStringExtra("product");
 
-                Unit u = UnitFactory.getUnitFactory().getUnit(unitName, activeColony.planet.location);
+                Unit u = UnitFactory.getUnitFactory().getUnit(unitName, activeColony.planet.location, null);
                 activeColony.currentlyBuilding = u;
                 activeColony = null;
                 updateGUI();

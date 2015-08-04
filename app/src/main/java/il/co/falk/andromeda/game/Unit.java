@@ -8,21 +8,23 @@ import java.util.Random;
 public class Unit {
     public String name;
     public int move;
-    int maxHP;
+    public int maxHP;
     int attack;
-    int hp;
+    public int hp;
     public int cost;
     public Location location;
     public Location destination;
+    public Player player;
 
 
-    public Unit(String name, int move, int maxHP, int attack, int cost, Location location) {
+    public Unit(String name, int move, int maxHP, int attack, int cost, Location location, Player player) {
         this.name = name;
         this.move = move;
         this.maxHP = maxHP;
         this.attack = attack;
         this.cost = cost;
         hp = maxHP;
+        this.player = player;
     }
 
     public Unit(Unit u) {

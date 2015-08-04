@@ -34,11 +34,11 @@ public class AIPlayer extends Player {
             float f = r.nextFloat();
 
             if(f<COLONIZE)
-                c.currentlyBuilding = UnitFactory.getUnitFactory().getUnit("Colony Ship", c.planet.location);
+                c.currentlyBuilding = UnitFactory.getUnitFactory().getUnit("Colony Ship", c.planet.location, this);
             else if(f<COLONIZE+ATTACK)
-                c.currentlyBuilding = UnitFactory.getUnitFactory().getUnit("Destroyer", c.planet.location);
+                c.currentlyBuilding = UnitFactory.getUnitFactory().getUnit("Destroyer", c.planet.location, this);
             else
-                UnitFactory.getUnitFactory().getUnit("Missile Base", c.planet.location);
+                UnitFactory.getUnitFactory().getUnit("Missile Base", c.planet.location, this);
         }
     }
 
