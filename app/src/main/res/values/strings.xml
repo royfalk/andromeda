@@ -10,5 +10,11 @@
     <string name="title_activity_open_gles20">OpenGLES20Activity</string>
     <string name="title_activity_planets">Planets</string>
     <string name="title_activity_tech">TechActivity</string>
+    <string name="action_game">Game</string>
+    <string name="action_colonies">Colonies</string>
+    <string name="action_planets">Planets</string>
+    <string name="action_races">Races</string>
+    <string name="action_tech">Tech</string>
+    <string name="action_next">Next</string>
 
 </resources>

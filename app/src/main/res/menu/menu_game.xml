@@ -4,4 +4,34 @@
     tools:context="il.co.falk.andromeda.il.co.falk.andromeda.il.co.falk.andromeda.view.GameActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_game"
+        android:icon="@drawable/ic_action_game"
+        android:title="@string/action_game"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_colonies"
+        android:icon="@drawable/ic_action_colonies"
+        android:title="@string/action_colonies"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_planets"
+        android:icon="@drawable/ic_action_planets"
+        android:title="@string/action_planets"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_races"
+        android:icon="@drawable/ic_action_races"
+        android:title="@string/action_races"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_tech"
+        android:icon="@drawable/ic_action_tech"
+        android:title="@string/action_tech"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_next"
+        android:icon="@drawable/ic_action_next"
+        android:title="@string/action_next"
+        android:showAsAction="ifRoom" />
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:showAsAction="never" />
+
 </menu>

@@ -1,7 +1,5 @@
 package il.co.falk.andromeda.game;
 
-import java.util.ArrayList;
-
 /**
  * Created by roy on 1/2/15.
  */
@@ -17,7 +15,7 @@ public class Colony {
         this.planet = planet;
         queue = 0;
 
-        currentlyBuilding = UnitFactory.getUnitFactory().getUnit("Missile Base", planet.location, player);
+        currentlyBuilding = ProductFactory.getProductFactory().getProduct("Missile Base", planet.location, player);
         //currentlyBuilding = new Unit("Trade Goods", 0,0,0,999, planet.location);
         planet.colony = this;
     }

@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import il.co.falk.andromeda.game.UnitFactory;
+import il.co.falk.andromeda.game.ProductFactory;
 
 
 public class SelectProductActivity extends ActionBarActivity {
@@ -26,7 +26,7 @@ public class SelectProductActivity extends ActionBarActivity {
 
         LinearLayout layout = (LinearLayout)findViewById(R.id.product_layout);
 
-        ArrayList<String> unitTypes = UnitFactory.getUnitFactory().list(this.getApplicationContext());
+        ArrayList<String> unitTypes = ProductFactory.getProductFactory().list(this.getApplicationContext());
 
         for(final String u : unitTypes) {
             Log.d(u,u);

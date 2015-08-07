@@ -21,8 +21,8 @@ import java.util.List;
 import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.Player;
+import il.co.falk.andromeda.game.ProductFactory;
 import il.co.falk.andromeda.game.Unit;
-import il.co.falk.andromeda.game.UnitFactory;
 import il.co.falk.andromeda.game.Universe;
 
 
@@ -135,7 +135,7 @@ public class PlanetActivity extends ActionBarActivity {
 
         if (requestCode == SelectProductActivity.ACTIVITY_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                planet.colony.currentlyBuilding = UnitFactory.getUnitFactory().getUnit(data.getStringExtra(SelectProductActivity.PRODUCT), planet.location, planet.colony.player);
+                planet.colony.currentlyBuilding = ProductFactory.getProductFactory().getProduct(data.getStringExtra(SelectProductActivity.PRODUCT), planet.location, planet.colony.player);
                 currentlyProducingView.setText(planet.colony.currentlyBuilding.name);
             }
         }

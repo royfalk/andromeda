@@ -5,52 +5,20 @@ import java.util.Random;
 /**
  * Created by roy on 1/2/15.
  */
-public class Unit {
-    public String name;
+public class Unit extends Product {
     public int move;
-    public int maxHP;
-    int attack;
-    public int hp;
-    public int cost;
-    public Location location;
     public Location destination;
-    public Player player;
 
 
     public Unit(String name, int move, int maxHP, int attack, int cost, Location location, Player player) {
-        this.name = name;
+        super(name, maxHP, attack, cost, location, player);
+
         this.move = move;
-        this.maxHP = maxHP;
-        this.attack = attack;
-        this.cost = cost;
-        hp = maxHP;
-        this.player = player;
     }
 
     public Unit(Unit u) {
-        name = u.name;
+        super(u);
         move = u.move;
-        maxHP = u.maxHP;
-        attack = u.attack;
-        cost = u.cost;
-        hp = u.maxHP;
-        location = u.location;
-    }
-
-
-
-    void attack(Unit target) {
-        if(hp<=0)
-            return; // Unit is dead
-        Random r = new Random();
-        int damage = r.nextInt(attack);
-        target.hp -= damage;
-    }
-
-    public boolean isDead() {
-        if(hp<=0)
-            return true;
-        return false;
     }
 
     void move(Location destination) {

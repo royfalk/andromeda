@@ -12,18 +12,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * Created by roy on 1/17/15.
  */
-public class UnitFactory {
-    private static UnitFactory unitFactory;
+public class ProductFactory {
+    private static ProductFactory productFactory;
     private ArrayList<String> unitList;
     private JSONArray jsonArray;
 
-    private UnitFactory(Context context) {
+    private ProductFactory(Context context) {
         AssetManager assetManager = context.getAssets();
         try {
             InputStream is = assetManager.open("units.json");
@@ -34,16 +32,16 @@ public class UnitFactory {
         }
     }
 
-    public static UnitFactory getUnitFactory(Context context) {
-        if(unitFactory == null) unitFactory = new UnitFactory(context);
-        return unitFactory;
+    public static ProductFactory getUnitFactory(Context context) {
+        if(productFactory == null) productFactory = new ProductFactory(context);
+        return productFactory;
     }
 
-    public static UnitFactory getUnitFactory() {
-        return unitFactory;
+    public static ProductFactory getProductFactory() {
+        return productFactory;
     }
 
-    public Unit getUnit(String unitName, Location location, Player player) {
+    public Unit getProduct(String unitName, Location location, Player player) {
         try {
             for(int i=0;i<jsonArray.length();i++) {
                 Log.d("JSON", "Array Object");
@@ -69,6 +67,23 @@ public class UnitFactory {
             ArrayList<String> list = new ArrayList<>();
             for(int i=0;i<jsonArray.length();i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
+                String name = object.getString("name");
+                list.add(name);
+            }
+            return list;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<String> list(Context context, String filter) {
+        try {
+            ArrayList<String> list = new ArrayList<>();
+            for(int i=0;i<jsonArray.length();i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                String type = object.getString("type");
+                if(!type.equals(filter)) continue;
                 String name = object.getString("name");
                 list.add(name);
             }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.NamesFactory;
-import il.co.falk.andromeda.game.UnitFactory;
+import il.co.falk.andromeda.game.ProductFactory;
 import il.co.falk.andromeda.game.Unit;
 import il.co.falk.andromeda.game.Universe;
 
@@ -30,8 +30,8 @@ public class GameActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        // Init UnitFactory
-        UnitFactory.getUnitFactory(this.getApplicationContext());
+        // Init ProductFactory
+        ProductFactory.getUnitFactory(this.getApplicationContext());
 
         // Init PlanetFactory
         new NamesFactory(this.getApplicationContext());
@@ -64,6 +64,24 @@ public class GameActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_game) {
+            onGame(null);
+            return true;
+        } else if (id == R.id.action_colonies) {
+            onColonies(null);
+            return true;
+        } else if (id == R.id.action_planets) {
+            onPlanets(null);
+            return true;
+        } else if (id == R.id.action_races) {
+            onRaces(null);
+            return true;
+        } else if (id == R.id.action_tech) {
+            onTech(null);
+            return true;
+        } else if (id == R.id.action_next) {
+            onNextTurn(null);
             return true;
         }
 
@@ -141,7 +159,7 @@ public class GameActivity extends ActionBarActivity {
             if (resultCode == RESULT_OK) {
                 String unitName = data.getStringExtra("product");
 
-                Unit u = UnitFactory.getUnitFactory().getUnit(unitName, activeColony.planet.location, null);
+                Unit u = ProductFactory.getProductFactory().getProduct(unitName, activeColony.planet.location, null);
                 activeColony.currentlyBuilding = u;
                 activeColony = null;
                 updateGUI();

@@ -3,21 +3,10 @@ package il.co.falk.andromeda;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
-
-import il.co.falk.andromeda.R;
-import il.co.falk.andromeda.game.Combat;
-import il.co.falk.andromeda.game.UnitFactory;
 
 
 public class MainActivity extends ActionBarActivity {
