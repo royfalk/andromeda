@@ -8,14 +8,16 @@ public class Colony {
     public Planet planet;
 
     public int queue;
-    public Unit currentlyBuilding;
+    public String currentlyBuilding;
+    public int currentCostToBuild;
 
     Colony(Player player, Planet planet) {
         this.player = player;
         this.planet = planet;
         queue = 0;
 
-        currentlyBuilding = ProductFactory.getProductFactory().getProduct("Missile Base", planet.location, player);
+        currentlyBuilding = "Missile Base";
+        currentCostToBuild = ProductFactory.getProductFactory().getProductPrice(currentlyBuilding);
         //currentlyBuilding = new Unit("Trade Goods", 0,0,0,999, planet.location);
         planet.colony = this;
     }
@@ -28,16 +30,16 @@ public class Colony {
     void build() {
         queue += planet.production + player.techManager.manufacturing.getLevel();
 
-        if(queue >= currentlyBuilding.cost) {
-            queue -= currentlyBuilding.cost;
-            planet.units.add(currentlyBuilding);
-            player.units.add(currentlyBuilding);
-            currentlyBuilding = new Unit(currentlyBuilding);
+        if(queue >= currentCostToBuild) {
+            queue -= currentCostToBuild;
+            Unit unit = ProductFactory.getProductFactory().getProduct(currentlyBuilding, planet.location, player);
+            planet.units.add(unit);
+            player.units.add(unit);
 
             // Apply Technology Bonuses
-            currentlyBuilding.hp += player.techManager.armor.getLevel();
-            if(currentlyBuilding.name.equals("Missile Base")) currentlyBuilding.attack += player.techManager.missile.getLevel();
-            if(currentlyBuilding.name.equals("Destroyer")) currentlyBuilding.attack += player.techManager.beam.getLevel();
+            unit.hp += player.techManager.armor.getLevel();
+            if(unit.name.equals("Missile Base")) unit.attack += player.techManager.missile.getLevel();
+            if(unit.name.equals("Destroyer")) unit.attack += player.techManager.beam.getLevel();
         }
     }
 
@@ -46,8 +48,15 @@ public class Colony {
         player.techManager.research(10+ player.techManager.research.getLevel());
     }
 
+    public void changeProductToBuild(String newItemToBuild) {
+        if(newItemToBuild.equals(currentlyBuilding)) return;
+        currentlyBuilding = newItemToBuild;
+        currentCostToBuild = ProductFactory.getProductFactory().getProductPrice(currentlyBuilding);
+        queue /= 2;
+    }
+
     public int getRemainingTurns() {
-        double t = (currentlyBuilding.cost - queue)/planet.production;
+        double t = (currentCostToBuild - queue)/planet.production;
         return (int)Math.ceil(t);
     }
 }

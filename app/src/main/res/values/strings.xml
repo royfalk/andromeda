@@ -16,5 +16,6 @@
     <string name="action_races">Races</string>
     <string name="action_tech">Tech</string>
     <string name="action_next">Next</string>
+    <string name="planetName">Planet Name</string>
 
 </resources>

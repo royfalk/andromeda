@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import il.co.falk.andromeda.game.Colony;
@@ -29,9 +32,11 @@ import il.co.falk.andromeda.game.Universe;
 public class PlanetActivity extends ActionBarActivity {
     public static final String PLANET_NAME = "PLANET_NAME";
 
+    String name;
     Planet planet;
+    Colony colony;
 
-    TextView planetNameView, productionView, currentlyProducingView, owner, remaining, turns;
+    TextView planetNameView, productionView, currentlyProducingView, owner, remaining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,39 +44,46 @@ public class PlanetActivity extends ActionBarActivity {
         setContentView(R.layout.activity_planet);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra(PlanetActivity.PLANET_NAME);
+        name = intent.getStringExtra(PlanetActivity.PLANET_NAME);
 
         planet = Universe.getUniverse().getPlanetByName(name);
+        //colony = planet.colony;
 
+        // Set Name
         planetNameView = (TextView)findViewById(R.id.planetName);
-        planetNameView.setText(name);
+        //planetNameView.setText(name);
 
+        // Set Production
         productionView = (TextView)findViewById(R.id.production);
-        productionView.setText(String.valueOf(planet.production));
+        //productionView.setText(String.valueOf(planet.production));
 
+        // Set Current Production and remaining
         currentlyProducingView = (TextView)findViewById(R.id.currentlyProducing);
-        currentlyProducingView.setText(planet.colony.currentlyBuilding.name);
-
         remaining = (TextView)findViewById(R.id.remaining);
-        remaining.setText("");
+        owner = (TextView) findViewById(R.id.ownerTextView);
+        if(colony != null) {
+            // Set planet owner and color
+            //Player player = planet.colony.player;
 
-        turns = (TextView)findViewById(R.id.turns);
-        turns.setText("");
+            //owner.setText(player.name);
+            //owner.setTextColor(player.color);
 
-        // Set planet owner and color
-        if(planet.colony != null) {
-            Player player = planet.colony.player;
-            owner = (TextView) findViewById(R.id.ownerTextView);
-            owner.setText(player.name);
-            owner.setTextColor(player.color);
-
-            Colony c = planet.colony;
-            remaining.setText(c.queue + "/" + c.currentlyBuilding.cost);
-            turns.setText(c.getRemainingTurns() + " turns");
+            //String building = colony.currentlyBuilding.name;
+            //int queue = colony.queue;
+            //int cost = colony.currentlyBuilding.cost;
+            //int turns = colony.getRemainingTurns();
+            //currentlyProducingView.setText(building);
+            //remaining.setText(queue+"/"+cost+" ("+turns+")");
+        } else {
+            //currentlyProducingView.setText("");
+            //remaining.setText("");
         }
 
+        updateGUI();
 
-        final ListView listview = (ListView) findViewById(R.id.planetaryDefensesListview);
+
+
+        /*final ListView listview = (ListView) findViewById(R.id.planetaryDefensesListview);
         final UnitArrayAdapter adapter = new UnitArrayAdapter(getApplicationContext(), planet.units);
         listview.setAdapter(adapter);
 
@@ -97,9 +109,9 @@ public class PlanetActivity extends ActionBarActivity {
 
                             }
                         });*/
-            }
+            /*}
 
-        });
+        });*/
     }
 
 
@@ -120,9 +132,61 @@ public class PlanetActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_next) {
+            onNextTurn(null);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onNextTurn(View view) {
+        Log.d("Andromeda", "Next Turn");
+        Universe.getUniverse().nextTurn();
+        updateGUI();
+    }
+
+    private void updateGUI() {
+        colony = planet.colony; // This way, if colony died or changed, it would change here too.
+
+        // Set Name
+        //planetNameView = (TextView)findViewById(R.id.planetName);
+        //planetNameView.setText(name);
+
+        // Set Production
+        //productionView = (TextView)findViewById(R.id.production);
+        productionView.setText(String.valueOf(planet.production));
+
+        // Set Current Production and remaining
+        //currentlyProducingView = (TextView)findViewById(R.id.currentlyProducing);
+        remaining = (TextView)findViewById(R.id.remaining);
+
+        if(colony != null) {
+            Log.d("test","t");
+
+            // Set planet owner and color
+            Player player = planet.colony.player;
+            //owner = (TextView) findViewById(R.id.ownerTextView);
+            owner.setText(player.name);
+            owner.setTextColor(player.color);
+
+            String building = colony.currentlyBuilding;
+            int queue = colony.queue;
+            int cost = colony.currentCostToBuild;
+            int turns = colony.getRemainingTurns();
+            currentlyProducingView.setText(building);
+            remaining.setText(queue+"/"+cost+" ("+turns+")");
+        } else {
+            currentlyProducingView.setText("");
+            remaining.setText("");
+        }
+
+        ArrayList<Unit> units = Universe.getUniverse().getShipsAtLocation(planet.location);
+
+        if(units!=null) {
+            Button button = (Button)findViewById(R.id.fleetButton);
+            button.setEnabled(true);
+        }
     }
 
     public void onSelectProduct(View view) {
@@ -135,8 +199,10 @@ public class PlanetActivity extends ActionBarActivity {
 
         if (requestCode == SelectProductActivity.ACTIVITY_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                planet.colony.currentlyBuilding = ProductFactory.getProductFactory().getProduct(data.getStringExtra(SelectProductActivity.PRODUCT), planet.location, planet.colony.player);
-                currentlyProducingView.setText(planet.colony.currentlyBuilding.name);
+                String productName = data.getStringExtra(SelectProductActivity.PRODUCT);
+                planet.colony.changeProductToBuild(productName);
+
+                currentlyProducingView.setText(productName);
             }
         }
 

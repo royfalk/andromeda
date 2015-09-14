@@ -24,7 +24,8 @@ public class SelectProductActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_product);
 
-        LinearLayout layout = (LinearLayout)findViewById(R.id.product_layout);
+        //LinearLayout layout = (LinearLayout)findViewById(R.id.product_layout);
+        LinearLayout layout = (LinearLayout)findViewById(R.id.product_linear_layout);
 
         ArrayList<String> unitTypes = ProductFactory.getProductFactory().list(this.getApplicationContext());
 

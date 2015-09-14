@@ -54,12 +54,28 @@ public class ProductFactory {
                 int attack = object.getInt("attack");
                 int cost = object.getInt("cost");
                 Unit u = new Unit(name, move, hp, attack, cost, location, player);
+                Universe.getUniverse().units.add(u);
                 return u;
             }
         } catch(Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getProductPrice(String unitName) {
+        try {
+            for(int i=0;i<jsonArray.length();i++) {
+                Log.d("JSON", "Array Object");
+                JSONObject object = jsonArray.getJSONObject(i);
+                String name = object.getString("name");
+                if(!name.equals(unitName)) continue;
+                return object.getInt("cost");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     public ArrayList<String> list(Context context) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -98,6 +99,12 @@ public class PlanetsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onNextTurn(View view) {
+        Log.d("Andromeda", "Next Turn");
+        Universe.getUniverse().nextTurn();
+        // TODO: updateGUI?
     }
 
     public void viewPlanet(final Planet planet) {

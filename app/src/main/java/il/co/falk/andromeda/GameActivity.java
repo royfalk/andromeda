@@ -37,6 +37,7 @@ public class GameActivity extends ActionBarActivity {
         new NamesFactory(this.getApplicationContext());
 
         universe = Universe.getUniverse();
+        universe.createUniverse();
 
         // Create Universe GUI
         StarMapView map = (StarMapView) findViewById(R.id.star_map);
@@ -159,8 +160,8 @@ public class GameActivity extends ActionBarActivity {
             if (resultCode == RESULT_OK) {
                 String unitName = data.getStringExtra("product");
 
-                Unit u = ProductFactory.getProductFactory().getProduct(unitName, activeColony.planet.location, null);
-                activeColony.currentlyBuilding = u;
+
+                activeColony.currentlyBuilding = unitName;
                 activeColony = null;
                 updateGUI();
             }

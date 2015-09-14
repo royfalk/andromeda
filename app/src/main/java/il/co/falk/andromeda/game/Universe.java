@@ -21,6 +21,7 @@ public class Universe {
 
     public ArrayList<Planet> planets;
     public ArrayList<Player> players;
+    public ArrayList<Unit> units;
     public Player player;
     int turn;
 
@@ -30,10 +31,15 @@ public class Universe {
     }
 
     private Universe() {
+        // Init must now happen in createUniverse to prevent calls to getUniverse from constructor
+    }
+
+    public void createUniverse() {
         turn = 1;
 
-        players = new ArrayList<Player>();
-        planets = new ArrayList<Planet>();
+        players = new ArrayList<>();
+        planets = new ArrayList<>();
+        units = new ArrayList<>();
 
         // Create Player & home planet
         player = new Player();
@@ -122,6 +128,17 @@ public class Universe {
         for(Colony c :  player.colonies)
             planets.add(c.planet);
         return planets;
+    }
+
+    public ArrayList<Unit> getShipsAtLocation(Location location) {
+        ArrayList<Unit> fleet = new ArrayList<>();
+        for(Unit unit : units) {
+            if(unit.location != null && unit.location.isInSamePlace(location))
+                fleet.add(unit);
+        }
+
+        if(fleet.size()>0) return fleet;
+        return null;
     }
 
 }

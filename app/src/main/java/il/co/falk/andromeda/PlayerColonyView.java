@@ -69,7 +69,7 @@ public class PlayerColonyView extends PlanetView {
         leftTitle.setText(planet.name + " (" + planet.production + ")");
         rightTitle.setText(colony.player.name);
         subtitle.setText(colony.getRemainingTurns()+" turns for ");
-        produce.setText(colony.currentlyBuilding.name);
+        produce.setText(colony.currentlyBuilding);
 
         if(shipsView!=null)
             shipsView.updateView(context);

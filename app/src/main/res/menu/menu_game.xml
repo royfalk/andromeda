@@ -2,13 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="il.co.falk.andromeda.il.co.falk.andromeda.il.co.falk.andromeda.view.GameActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
 
     <item android:id="@+id/action_game"
         android:icon="@drawable/ic_action_game"
         android:title="@string/action_game"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
     <item android:id="@+id/action_colonies"
         android:icon="@drawable/ic_action_colonies"
         android:title="@string/action_colonies"

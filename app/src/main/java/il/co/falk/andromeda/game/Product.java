@@ -20,6 +20,7 @@ public class Product {
         this.maxHP = maxHP;
         this.attack = attack;
         this.cost = cost;
+        this.location = location;
         hp = maxHP;
         this.player = player;
     }
