@@ -17,5 +17,6 @@
     <string name="action_tech">Tech</string>
     <string name="action_next">Next</string>
     <string name="planetName">Planet Name</string>
+    <string name="title_activity_fleet">FleetActivity</string>
 
 </resources>

@@ -49,6 +49,9 @@ public class Universe {
         Colony c = new Colony(player, p);
         planets.add(p);
         player.colonies.add(c);
+        // TODO: for debug
+        c.changeProductToBuild("Destroyer");
+        for(int i=0;i<5;i++) c.nextTurn();
 
         // Create other players & home planets
         for(int i=players.size();i<PLAYERS;i++) {

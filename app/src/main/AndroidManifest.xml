@@ -44,6 +44,10 @@
             android:name=".TechActivity"
             android:label="@string/title_activity_tech" >
         </activity>
+        <activity
+            android:name=".FleetActivity"
+            android:label="@string/title_activity_fleet" >
+        </activity>
     </application>
 
 </manifest>
