@@ -1,28 +1,15 @@
 package il.co.falk.andromeda;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.List;
-
-import il.co.falk.andromeda.game.Planet;
-import il.co.falk.andromeda.game.Player;
 import il.co.falk.andromeda.game.TechManager;
 import il.co.falk.andromeda.game.Universe;
 
 
-public class TechActivity extends ActionBarActivity {
+public class TechActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,15 +1,12 @@
 package il.co.falk.andromeda;
 
+import android.app.Activity;
 import android.content.Context;
-import android.opengl.EGLConfig;
 import android.opengl.GLES20;
-import android.opengl.GLES10;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.FloatMath;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,7 +18,7 @@ import java.nio.ShortBuffer;
 import javax.microedition.khronos.opengles.GL10;
 
 
-public class OpenGLES20Activity extends ActionBarActivity {
+public class OpenGLES20Activity extends Activity {
 
     private GLSurfaceView mGLView;
 

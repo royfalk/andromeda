@@ -3,28 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="il.co.falk.andromeda.il.co.falk.andromeda.il.co.falk.andromeda.view.GameActivity">
 
+    <!--        android:icon="@drawable/ic_action_game"-->
     <item android:id="@+id/action_game"
-        android:icon="@drawable/ic_action_game"
+
         android:title="@string/action_game"
         android:showAsAction="always" />
+<!--    android:icon="@drawable/ic_action_colonies"-->
     <item android:id="@+id/action_colonies"
-        android:icon="@drawable/ic_action_colonies"
+
         android:title="@string/action_colonies"
         android:showAsAction="ifRoom" />
+<!--    android:icon="@drawable/ic_action_planets"-->
     <item android:id="@+id/action_planets"
-        android:icon="@drawable/ic_action_planets"
+
         android:title="@string/action_planets"
         android:showAsAction="ifRoom" />
+<!--    android:icon="@drawable/ic_action_races"-->
     <item android:id="@+id/action_races"
-        android:icon="@drawable/ic_action_races"
+
         android:title="@string/action_races"
         android:showAsAction="ifRoom" />
+<!--    android:icon="@drawable/ic_action_tech"-->
     <item android:id="@+id/action_tech"
-        android:icon="@drawable/ic_action_tech"
+
         android:title="@string/action_tech"
         android:showAsAction="ifRoom" />
+<!--    android:icon="@drawable/ic_action_next"-->
     <item android:id="@+id/action_next"
-        android:icon="@drawable/ic_action_next"
+
         android:title="@string/action_next"
         android:showAsAction="ifRoom" />
     <!-- Settings, should always be in the overflow -->

@@ -7,11 +7,12 @@
 <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="72dp">
+    <!--                android:src="@drawable/ocean"-->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView"
-                android:src="@drawable/ocean"
+
                 android:layout_alignBottom="@+id/leftTitle"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />

@@ -1,9 +1,8 @@
 package il.co.falk.andromeda;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import il.co.falk.andromeda.game.Planet;
@@ -25,7 +22,7 @@ import il.co.falk.andromeda.game.Player;
 import il.co.falk.andromeda.game.Universe;
 
 
-public class PlanetsActivity extends ActionBarActivity {
+public class PlanetsActivity extends Activity {
     public static final String LIST_TYPE = "LIST_TYPE";
     public static final String LIST_TYPE_COLONIES = "LIST_TYPE_COLONIES";
     public static final String LIST_TYPE_PLANETS = "LIST_TYPE_PLANETS";

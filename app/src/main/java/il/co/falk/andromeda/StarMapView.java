@@ -6,24 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.Player;
 import il.co.falk.andromeda.game.Unit;
@@ -45,7 +37,7 @@ public class StarMapView extends View {
     private static final String DEBUG_TAG = "star map gesture";
     private static final String[] PLANET_COLORS = {"#999999", "#FF9966", "#996633", "#99FF99", "#009999", "#00CC00"};
     private ScaleGestureDetector mScaleDetector;
-    private GestureDetectorCompat mDetector;
+    private GestureDetector mDetector;
 
     public StarMapView(Context context) {
         super(context);
@@ -73,7 +65,7 @@ public class StarMapView extends View {
 
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 
-        mDetector = new GestureDetectorCompat(context, new SimpleGestureListener());
+        mDetector = new GestureDetector(context, new SimpleGestureListener());
     }
 
 

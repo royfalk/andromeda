@@ -1,7 +1,7 @@
 package il.co.falk.andromeda;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import il.co.falk.andromeda.game.ProductFactory;
 
 
-public class SelectProductActivity extends ActionBarActivity {
+public class SelectProductActivity extends Activity {
     public static final int ACTIVITY_CODE=37;
     public static final String PRODUCT="PRODUCT";
 

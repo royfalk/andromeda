@@ -1,8 +1,8 @@
 package il.co.falk.andromeda;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,10 +15,9 @@ import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.NamesFactory;
 import il.co.falk.andromeda.game.ProductFactory;
-import il.co.falk.andromeda.game.Unit;
 import il.co.falk.andromeda.game.Universe;
 
-public class GameActivity extends ActionBarActivity {
+public class GameActivity extends Activity {
     Universe universe;
     ArrayList<PlanetView> planets;
     public static final int SELECT_PRODUCT = 965;
