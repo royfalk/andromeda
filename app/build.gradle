@@ -20,6 +20,14 @@ android {
         }
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.8"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
     lintOptions {
         // set to true to turn off analysis progress reporting by lint
         quiet false
@@ -28,11 +36,32 @@ android {
         // if true, only report errors
         ignoreWarnings false
     }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.7.1'
+
+    // Compose
+    implementation(platform("androidx.compose:compose-bom:2025.07.00")) // Example BOM version
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation 'androidx.activity:activity-compose'
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    implementation 'com.google.android.material:material:1.12.0'
+
+    // JUnit 5 testing
+    testImplementation platform('org.junit:junit-bom:5.10.2') // Use BOM to align all versions
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 java {
     toolchain {
