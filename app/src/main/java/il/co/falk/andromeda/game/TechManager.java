@@ -9,15 +9,15 @@ public class TechManager {
         MISSILE
     }
 
-    Tech research, manufacturing, armor, beam, missile;
+    ATech research, manufacturing, armor, beam, missile;
 
 
     TechManager() {
-        research = new Tech(0.33);
-        manufacturing = new Tech(0.33);
-        armor = new Tech(0.11);
-        beam = new Tech(0.11);
-        missile = new Tech(0.12);
+        research = new ATech(0.33);
+        manufacturing = new ATech(0.33);
+        armor = new ATech(0.11);
+        beam = new ATech(0.11);
+        missile = new ATech(0.12);
     }
 
     public void research(int effort) {
@@ -51,12 +51,12 @@ public class TechManager {
     }
 }
 
-class Tech {
+class ATech {
     private final int RESEARCH_LEVEL = 100;
     double ratio;
     int level, effort, toNextLevel;
 
-    public Tech(double ratio) {
+    public ATech(double ratio) {
         this.ratio = ratio;
         level = 0;
         effort = 0;
