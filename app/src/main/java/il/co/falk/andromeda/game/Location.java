@@ -1,18 +1,18 @@
 package il.co.falk.andromeda.game;
 
+import android.graphics.Point;
+
 import java.util.Random;
 
 /**
  * Created by roy on 1/2/15.
  */
-public class Location {
-    public float x,y;
-
+public class Location extends Point {
     Location() {
         Random r = new Random();
 
-        x = r.nextInt(Universe.WIDTH);
-        y = r.nextInt(Universe.HEIGHT);
+        x = r.nextInt(Configuration.universeWidth);
+        y = r.nextInt(Configuration.universeHeight);
     }
 
     Location(int x, int y) {

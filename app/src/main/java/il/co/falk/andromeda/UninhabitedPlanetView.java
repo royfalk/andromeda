@@ -3,15 +3,14 @@ package il.co.falk.andromeda;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import il.co.falk.andromeda.game.Game;
 import il.co.falk.andromeda.game.Planet;
-import il.co.falk.andromeda.game.Universe;
 
 /**
  * Created by roy on 1/16/15.
@@ -45,8 +44,7 @@ public class UninhabitedPlanetView extends PlanetView {
         colonize.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v) {
-                Universe universe = Universe.getUniverse();
-                universe.player.colonize(planet);
+                Game.INSTANCE.getHumanPlayer().colonize(planet);
                 activity.repopulatePlanets();
             }
         });

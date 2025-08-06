@@ -21,8 +21,9 @@ import java.util.List;
 import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.Player;
-import il.co.falk.andromeda.game.Unit;
-import il.co.falk.andromeda.game.Universe;
+import il.co.falk.andromeda.game.Ship;
+import il.co.falk.andromeda.game.UniverseUtilsKt;
+import il.co.falk.andromeda.game.Game;
 
 
 public class PlanetActivity extends Activity {
@@ -42,7 +43,6 @@ public class PlanetActivity extends Activity {
         Intent intent = getIntent();
         name = intent.getStringExtra(PlanetActivity.PLANET_NAME);
 
-        planet = Universe.getUniverse().getPlanetByName(name);
         //colony = planet.colony;
 
         // Set Name
@@ -138,7 +138,7 @@ public class PlanetActivity extends Activity {
 
     public void onNextTurn(View view) {
         Log.d("Andromeda", "Next Turn");
-        Universe.getUniverse().nextTurn();
+        Game.INSTANCE.nextTurn();
         updateGUI();
     }
 
@@ -163,8 +163,8 @@ public class PlanetActivity extends Activity {
             // Set planet owner and color
             Player player = planet.colony.player;
             //owner = (TextView) findViewById(R.id.ownerTextView);
-            owner.setText(player.name);
-            owner.setTextColor(player.color);
+            owner.setText(player.getName());
+            owner.setTextColor(player.getColor());
 
             String building = colony.currentlyBuilding;
             int queue = colony.queue;
@@ -177,9 +177,9 @@ public class PlanetActivity extends Activity {
             remaining.setText("");
         }
 
-        ArrayList<Unit> units = Universe.getUniverse().getShipsAtLocation(planet.location);
+        List<Ship> ships = UniverseUtilsKt.getShipsAtLocation(planet.location);
 
-        if(units!=null) {
+        if(ships !=null) {
             Button button = (Button)findViewById(R.id.fleetButton);
             button.setEnabled(true);
         }
@@ -206,17 +206,17 @@ public class PlanetActivity extends Activity {
     }
 
 
-    class UnitArrayAdapter extends ArrayAdapter<Unit> {
+    class UnitArrayAdapter extends ArrayAdapter<Ship> {
         public final Context context;
 
-        public UnitArrayAdapter(Context context, List<Unit> units) {
-            super(context, R.layout.unit_row, units);
+        public UnitArrayAdapter(Context context, List<Ship> ships) {
+            super(context, R.layout.unit_row, ships);
             this.context = context;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Unit u = (Unit)getItem(position);
+            Ship u = (Ship)getItem(position);
 
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

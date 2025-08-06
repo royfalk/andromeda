@@ -19,7 +19,7 @@ import java.util.List;
 
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.Player;
-import il.co.falk.andromeda.game.Universe;
+import il.co.falk.andromeda.game.Game;
 
 
 public class PlanetsActivity extends Activity {
@@ -36,13 +36,15 @@ public class PlanetsActivity extends Activity {
         String type = intent.getStringExtra(PlanetsActivity.LIST_TYPE);
 
         final ListView listview = (ListView) findViewById(R.id.listview);
-        Universe universe = Universe.getUniverse();
 
         PlanetsArrayAdapter tempAdapter;
         if(type.equals(LIST_TYPE_COLONIES)) {
-            tempAdapter = new PlanetsArrayAdapter(this, universe.getPlanetsByPlayer(universe.player));
+            List<Player> players = Game.INSTANCE.getPlayers();
+            Player player = players.get(0);
+
+            tempAdapter = new PlanetsArrayAdapter(this, player.getColoniesAsPlanets());
         } else {
-            tempAdapter = new PlanetsArrayAdapter(this, universe.planets);
+            tempAdapter = new PlanetsArrayAdapter(this, Game.INSTANCE.getPlanets());
         }
 
         final PlanetsArrayAdapter adapter = tempAdapter;
@@ -100,7 +102,7 @@ public class PlanetsActivity extends Activity {
 
     public void onNextTurn(View view) {
         Log.d("Andromeda", "Next Turn");
-        Universe.getUniverse().nextTurn();
+//        UniverseUtils.getUniverse().nextTurn();
         // TODO: updateGUI?
     }
 
@@ -143,8 +145,8 @@ class PlanetsArrayAdapter extends ArrayAdapter<Planet> {
         if(p.colony != null) {
             Player player = p.colony.player;
             textView = (TextView) rowView.findViewById(R.id.ownerTextView);
-            textView.setText(player.name);
-            textView.setTextColor(player.color);
+//            textView.setText(player.name);
+//            textView.setTextColor(player.color);
         }
         return rowView;
     }

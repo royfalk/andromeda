@@ -28,24 +28,24 @@ public class Colony {
     }
 
     void build() {
-        queue += planet.production + player.techManager.manufacturing.getLevel();
+        queue += planet.production + player.getTechManager().manufacturing.getLevel();
 
         if(queue >= currentCostToBuild) {
             queue -= currentCostToBuild;
-            Unit unit = ProductFactory.getProductFactory().getProduct(currentlyBuilding, planet.location, player);
-            planet.units.add(unit);
-            player.units.add(unit);
+            Ship ship = ProductFactory.getProductFactory().getProduct(currentlyBuilding, planet.location, player);
+            planet.ships.add(ship);
+            player.addShip(ship);
 
             // Apply Technology Bonuses
-            unit.hp += player.techManager.armor.getLevel();
-            if(unit.name.equals("Missile Base")) unit.attack += player.techManager.missile.getLevel();
-            if(unit.name.equals("Destroyer")) unit.attack += player.techManager.beam.getLevel();
+            ship.hp += player.getTechManager().armor.getLevel();
+            if(ship.name.equals("Missile Base")) ship.attack += player.getTechManager().missile.getLevel();
+            if(ship.name.equals("Destroyer")) ship.attack += player.getTechManager().beam.getLevel();
         }
     }
 
     void research() {
         // TODO: something more meaningful here
-        player.techManager.research(10+ player.techManager.research.getLevel());
+        player.getTechManager().research(10+ player.getTechManager().research.getLevel());
     }
 
     public void changeProductToBuild(String newItemToBuild) {

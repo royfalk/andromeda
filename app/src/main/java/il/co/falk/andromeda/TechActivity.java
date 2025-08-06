@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import il.co.falk.andromeda.game.Game;
 import il.co.falk.andromeda.game.TechManager;
-import il.co.falk.andromeda.game.Universe;
 
 
 public class TechActivity extends Activity {
@@ -16,7 +17,7 @@ public class TechActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tech);
 
-        TechManager techManager = Universe.getUniverse().player.techManager;
+        TechManager techManager = Game.INSTANCE.getHumanPlayer().getTechManager();
 
         TextView textView = (TextView) findViewById(R.id.techLevelResearch);
         textView.setText(String.valueOf(techManager.getTechLevel(TechManager.Field.RESEARCH)));

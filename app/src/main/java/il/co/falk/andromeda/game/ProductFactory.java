@@ -41,7 +41,7 @@ public class ProductFactory {
         return productFactory;
     }
 
-    public Unit getProduct(String unitName, Location location, Player player) {
+    public Ship getProduct(String unitName, Location location, Player player) {
         try {
             for(int i=0;i<jsonArray.length();i++) {
                 Log.d("JSON", "Array Object");
@@ -53,8 +53,8 @@ public class ProductFactory {
                 int hp = object.getInt("hp");
                 int attack = object.getInt("attack");
                 int cost = object.getInt("cost");
-                Unit u = new Unit(name, move, hp, attack, cost, location, player);
-                Universe.getUniverse().units.add(u);
+                Ship u = new Ship(name, move, hp, attack, cost, location, player);
+                Game.INSTANCE.ships.add(u);
                 return u;
             }
         } catch(Exception e) {

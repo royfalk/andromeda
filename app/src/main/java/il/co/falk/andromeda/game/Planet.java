@@ -2,7 +2,6 @@ package il.co.falk.andromeda.game;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.jar.Attributes;
 
 /**
  * Created by roy on 1/2/15.
@@ -17,7 +16,7 @@ public class Planet {
     public Location location;
     public String name;
     public Colony colony;
-    public ArrayList<Unit> units;
+    public ArrayList<Ship> ships;
 
     Planet(boolean homePlanet) {
         name = NamesFactory.getPlanetName();
@@ -32,6 +31,6 @@ public class Planet {
         location = new Location();
         colony = null;
 
-        units = new ArrayList<>();
+        ships = new ArrayList<>();
     }
 }

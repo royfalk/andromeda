@@ -22,6 +22,27 @@ class ResourceTest {
         assert(resource.get()==50)
         assert(resource.percent()==0.5)
 
+        resource += 20
+        assert(resource.value_==70)
+        assert(resource.min_value_==0)
+        assert(resource.max_value_==100)
+        assert(resource.get()==70)
+        assert(resource.percent()==0.7)
+
+        resource += 90
+        assert(resource.value_==100)
+        assert(resource.min_value_==0)
+        assert(resource.max_value_==100)
+        assert(resource.get()==100)
+        assert(resource.percent()==1.0)
+
+        resource -= 50
+        assert(resource.value_==50)
+        assert(resource.min_value_==0)
+        assert(resource.max_value_==100)
+        assert(resource.get()==50)
+        assert(resource.percent()==0.5)
+
         resource.setToMax()
         assert(resource.value_==100)
         assert(resource.min_value_==0)

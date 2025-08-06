@@ -1,19 +1,15 @@
 package il.co.falk.andromeda;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import il.co.falk.andromeda.game.Colony;
+import il.co.falk.andromeda.game.Game;
 import il.co.falk.andromeda.game.Planet;
-import il.co.falk.andromeda.game.Player;
-import il.co.falk.andromeda.game.Universe;
 
 /**
  * Created by roy on 1/12/15.
@@ -41,7 +37,7 @@ public class ColonyView extends PlanetView {
         leftTitle = (TextView)findViewById(R.id.leftTitle);
         rightTitle = (TextView)findViewById(R.id.rightTitle);
 
-        int color = colony.player.color;
+        int color = colony.player.getColor();
         leftTitle.setTextColor(color);
         rightTitle.setTextColor(color);
 
@@ -49,8 +45,7 @@ public class ColonyView extends PlanetView {
         attack.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v) {
-                Universe universe = Universe.getUniverse();
-                universe.player.attack(planet);
+                Game.INSTANCE.getHumanPlayer().attack(planet);
                 activity.repopulatePlanets();
             }
         });
@@ -59,7 +54,7 @@ public class ColonyView extends PlanetView {
 
     public void updateView(Context context, boolean canColonize, boolean canAttack) {
         leftTitle.setText(planet.name + " (" + planet.production + ")");
-        rightTitle.setText(colony.player.name);
+        rightTitle.setText(colony.player.getName());
         attack.setEnabled(canAttack);
     }
 }

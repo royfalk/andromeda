@@ -3,7 +3,6 @@ package il.co.falk.andromeda;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import il.co.falk.andromeda.game.Colony;
 import il.co.falk.andromeda.game.Planet;
-import il.co.falk.andromeda.game.Universe;
 
 /**
  * Created by roy on 1/12/15.
@@ -67,7 +65,7 @@ public class PlayerColonyView extends PlanetView {
 
     public void updateView(Context context, boolean canColonize, boolean canAttack) {
         leftTitle.setText(planet.name + " (" + planet.production + ")");
-        rightTitle.setText(colony.player.name);
+        rightTitle.setText(colony.player.getName());
         subtitle.setText(colony.getRemainingTurns()+" turns for ");
         produce.setText(colony.currentlyBuilding);
 
@@ -76,7 +74,4 @@ public class PlayerColonyView extends PlanetView {
 
 
     }
-
-
-
 }

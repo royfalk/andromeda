@@ -16,10 +16,11 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import il.co.falk.andromeda.game.Configuration;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.Player;
-import il.co.falk.andromeda.game.Unit;
-import il.co.falk.andromeda.game.Universe;
+import il.co.falk.andromeda.game.Ship;
+import il.co.falk.andromeda.game.Game;
 
 /**
  * Created by roy on 1/21/15.
@@ -58,7 +59,7 @@ public class StarMapView extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.GREEN);
 
-        lMap = new FRect(0,0,Universe.WIDTH, Universe.HEIGHT);
+        lMap = new FRect(0,0, Configuration.universeWidth, Configuration.universeHeight);
         lView = new FRect(lMap);
 
         zoom = 1;
@@ -72,13 +73,12 @@ public class StarMapView extends View {
 
 
     protected void onDraw(Canvas canvas) {
-        Universe universe = Universe.getUniverse();
         float width = getWidth();
         float height = getHeight();
 
         paint.setTextSize(32);
 
-        for(Planet planet : universe.planets) {
+        for(Planet planet : Game.INSTANCE.getPlanets()) {
             if(!lView.contains(planet.location.x, planet.location.y)) continue;
             drawPlanet(canvas, width, height, planet);
             drawPlanetLabel(canvas, width, height, planet);
@@ -101,7 +101,7 @@ public class StarMapView extends View {
         float y = lView.getRelativeY(planet.location.y, height);
 
         if(planet.colony != null)
-            paint.setColor(planet.colony.player.color);
+            paint.setColor(planet.colony.player.getColor());
         else
             paint.setColor(Color.LTGRAY);
         // TODO: x-y depending on length of planet name
@@ -112,14 +112,14 @@ public class StarMapView extends View {
     }
 
     void drawShipsInOrbit(Canvas canvas, float width, float height, Planet planet) {
-        if(planet.units.size() == 0) return;
+        if(planet.ships.size() == 0) return;
 
         List<Player> presentPlayers = new ArrayList<>();
-        for(Unit u : planet.units)
+        for(Ship u : planet.ships)
             if(!presentPlayers.contains(u.player)) presentPlayers.add(u.player);
 
         if(presentPlayers.size()==1)
-            paint.setColor(presentPlayers.get(0).color);
+            paint.setColor(presentPlayers.get(0).getColor());
         else
             paint.setColor(Color.WHITE);
 
@@ -162,11 +162,10 @@ public class StarMapView extends View {
         public boolean onSingleTapConfirmed(MotionEvent event) {
             Log.d("Tap", "tap");
 
-            Universe universe = Universe.getUniverse();
             float width = getWidth();
             float height = getHeight();
 
-            for(Planet p : universe.planets) {
+            for(Planet p : Game.INSTANCE.getPlanets()) {
                 if (!lView.contains(p.location.x, p.location.y)) continue;
 
                 float x = event.getX();
@@ -204,7 +203,6 @@ public class StarMapView extends View {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             Log.d("Scale", String.valueOf(detector.getScaleFactor()));
-            Universe universe = Universe.getUniverse();
 
             float z = detector.getScaleFactor();
             float px = detector.getFocusX()/getWidth();

@@ -1,39 +1,49 @@
-/*package il.co.falk.andromeda.game;
+package il.co.falk.andromeda.game;
 
-import java.util.ArrayList;*/
 
 /**
  * Created by roy on 1/3/15.
  */
-/*public class Game {
-    // Singleton
-    private static Game game;
+object Game {
+    var players : List<Player> = generatePlayers(5)
+    var planets : List<Planet> = generatePlanets(players)
 
-    public Universe universe;
-    int turn;
 
-    public static Game getGame() {
-        if(game == null) game = new Game();
-        return game;
-    }
+    val humanPlayer: Player = players.get(0)
+    // TODO: remove this after converting to Kotlin
+    @JvmField
+    val ships = mutableListOf<Ship>()
+    var livingPlayers = players.size
+    var turn: Int = 1
 
-    private Game () {
-        universe = Universe.getUniverse();
-        turn = 1;
-    }
+    fun nextTurn() {
+        turn++
 
-    public ArrayList<Planet> getPlanets() { return universe.planets; }
+        for (player in players) {
+            if(player.dead) {
+                if(player.human) {
+                    // Do something
+                }
+                continue
+            }
 
-    public void nextTurn() {
-        turn++;
-
-        for(Player p : universe.players) {
-            p.nextTurn();
+            player.act()
         }
     }
 
-    public boolean gameEnded() {
-        if(universe)
+    fun gameEnded(): Boolean {
+        return livingPlayers == 1 // || humanPlayer.dead
     }
+
+    /*fun getPlanets(): List<Planet> {
+        return planets
+    }
+
+    fun getPlayers(): List<Player> {
+        return players
+    }
+
+    fun getShip(): List<Ship> {
+        return ships
+    }*/
 }
-*/

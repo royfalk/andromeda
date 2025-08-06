@@ -18,7 +18,7 @@ import java.util.List;
 
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.Player;
-import il.co.falk.andromeda.game.Universe;
+import il.co.falk.andromeda.game.Game;
 
 public class FleetActivity extends Activity {
     public static final String FLEET_LOCATION = "FLEET_LOCATION";
@@ -32,7 +32,6 @@ public class FleetActivity extends Activity {
         String type = intent.getStringExtra(FleetActivity.FLEET_LOCATION);
 
         final ListView listview = (ListView) findViewById(R.id.listview);
-        Universe universe = Universe.getUniverse();
 
        // typon
 
@@ -79,7 +78,7 @@ public class FleetActivity extends Activity {
 
     public void onNextTurn(View view) {
         Log.d("Andromeda", "Next Turn");
-        Universe.getUniverse().nextTurn();
+        Game.INSTANCE.nextTurn();
         // TODO: updateGUI?
     }
 }
@@ -114,8 +113,8 @@ class FleetArrayAdapter extends ArrayAdapter<Planet> {
         if(p.colony != null) {
             Player player = p.colony.player;
             textView = (TextView) rowView.findViewById(R.id.ownerTextView);
-            textView.setText(player.name);
-            textView.setTextColor(player.color);
+            textView.setText(player.getName());
+            textView.setTextColor(player.getColor());
         }
         return rowView;
     }

@@ -13,10 +13,15 @@ class Resource<T :  Number>(
     val no_max_:Boolean = (max_value_ == -1)
 ) {
 
-    // TODO:
-//    operator fun plus(other: T): Resource<T> {
-//        return
-//    }
+    operator fun plusAssign(other: T) {
+        val new_value: T = (value_.toDouble() + other.toDouble()) as T
+        set(new_value)
+    }
+
+    operator fun minusAssign(other: T) {
+        val new_value: T = (value_.toDouble() - other.toDouble()) as T
+        set(new_value)
+    }
 
     fun percent(): Double {
         if(no_max_) {   // Can't calculate percent if there's no max

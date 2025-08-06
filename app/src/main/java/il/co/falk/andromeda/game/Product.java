@@ -1,5 +1,6 @@
 package il.co.falk.andromeda.game;
 
+
 import java.util.Random;
 
 /**
@@ -36,7 +37,7 @@ public class Product {
 
 
 
-    void attack(Unit target) {
+    void attack(Ship target) {
         if(attack == 0 || hp <= 0) // Unit is dead or harmless
             return;
 

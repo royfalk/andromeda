@@ -12,13 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import il.co.falk.andromeda.game.Colony;
+import il.co.falk.andromeda.game.Game;
 import il.co.falk.andromeda.game.Planet;
 import il.co.falk.andromeda.game.NamesFactory;
 import il.co.falk.andromeda.game.ProductFactory;
-import il.co.falk.andromeda.game.Universe;
 
 public class GameActivity extends Activity {
-    Universe universe;
     ArrayList<PlanetView> planets;
     public static final int SELECT_PRODUCT = 965;
     Colony activeColony;
@@ -35,8 +34,6 @@ public class GameActivity extends Activity {
         // Init PlanetFactory
         new NamesFactory(this.getApplicationContext());
 
-        universe = Universe.getUniverse();
-        universe.createUniverse();
 
         // Create Universe GUI
         StarMapView map = (StarMapView) findViewById(R.id.star_map);
@@ -89,14 +86,14 @@ public class GameActivity extends Activity {
     }
 
     public void nextTurn(View view) {
-        universe.nextTurn();
+        Game.INSTANCE.nextTurn();
         updateGUI();
     }
 
     public void repopulateStarMapWithPlanets(int w, int h) {
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.star_map);
 
-        for (Planet p : universe.planets) {
+        for (Planet p : Game.INSTANCE.getPlanets()) {
             TextView tv = new TextView(getApplicationContext());
             tv.setText(p.name);
             rl.addView(tv);
@@ -113,10 +110,10 @@ public class GameActivity extends Activity {
 
         planets = new ArrayList<>();
 
-        for (Planet p : universe.planets) {
+        for (Planet p : Game.INSTANCE.getPlanets()) {
             PlanetView pv;
             if (p.colony != null) {
-                if (p.colony.player == universe.player) {
+                if (p.colony.player.getHuman()) {
                     pv = new PlayerColonyView(this, getApplicationContext(), p.colony, p);
                 } else {
                     pv = new ColonyView(this, getApplicationContext(), p.colony, p);
@@ -132,16 +129,16 @@ public class GameActivity extends Activity {
     }
 
     void updateGUI() {
-        boolean canColonize = universe.player.canColonize();
-        boolean canAttack = universe.player.canAttack();
+        boolean canColonize = Game.INSTANCE.getHumanPlayer().canColonize();
+        boolean canAttack = Game.INSTANCE.getHumanPlayer().canAttack();
 
         for (PlanetView pv : planets) {
             pv.updateView(this.getApplicationContext(), canColonize, canAttack);
         }
 
         // check if end of game
-        if (universe.gameEnded()) {
-            if (universe.player == universe.players.get(0))
+        if (Game.INSTANCE.gameEnded()) {
+            if (!Game.INSTANCE.getPlayers().get(0).getDead())
                 Log.d("Victory", "Victory");
             else
                 Log.d("Defeat", "Defeat");
@@ -193,7 +190,7 @@ public class GameActivity extends Activity {
 
     public void onNextTurn(View view) {
         Log.d("Andromeda", "Next Turn");
-        universe.nextTurn();
+        Game.INSTANCE.nextTurn();
         updateGUI();
     }
 }

@@ -1,107 +1,115 @@
-package il.co.falk.andromeda.game;
-
-import android.graphics.Color;
-
-import java.util.ArrayList;
+package il.co.falk.andromeda.game
 
 /**
  * Created by roy on 1/2/15.
  */
-public class Player {
-    public static final int[] PLAYER_COLORS = {
-        Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA, Color.CYAN};
+open class Player internal constructor(val index: Int, val name: String) {
+    var dead = false
+    var human = false
 
-    static int numPlayers = 0;
+    val knownPlanets = mutableListOf<Planet>()
 
-    ArrayList<Planet> knownPlanets;
-    public ArrayList<Colony> colonies;
-    ArrayList<Unit> units;
-    public int color;
-    public String name;
-    public TechManager techManager;
+    // TODO: remove this after converting to Kotlin
+    @JvmField
+    protected val colonies = mutableListOf<Colony>()
+    val ships = mutableListOf<Ship>()
 
-    Player() {
-        colonies = new ArrayList<Colony>();
-        units = new ArrayList<Unit>();
-        Color c = new Color();
-        name = NamesFactory.getRaceName();
-        color = PLAYER_COLORS[numPlayers++];
-        techManager = new TechManager();
-    }
+    var color = Configuration.playerColors[index]
+    var techManager = TechManager()
 
-    public void nextTurn() {
-        for(Colony c : colonies) {
-            c.nextTurn();
+    //name = NamesFactory.getRaceName()
+
+
+    fun act() {
+        for (colony in colonies) {
+            colony.nextTurn()
         }
     }
 
-    public boolean canColonize() {
-        for(Unit u : units)
-                if(u.name.equals("Colony Ship"))
-                    return true;
+    fun addColony(colony: Colony) {
+        colonies.add(colony)
+    }
+
+    fun addShip(ship: Ship) {
+        ships.add(ship)
+    }
+
+    fun getColonies(): List<Colony> {
+        return colonies
+    }
+
+    fun getColoniesAsPlanets(): List<Planet> {
+        val list = mutableListOf<Planet>()
+        for(colony in colonies) list.add(colony.planet)
+        return list
+    }
+
+    fun canColonize(): Boolean {
+        for (ship in ships) if (ship.name == "Colony Ship") return true
         /*for(Colony c : colonies)
             for(Unit u : c.units)
                 if(u.getClass().equals(ColonyShip.class))
                     return true;*/
-        return false;
+        return false
     }
 
-    public boolean canAttack() {
-        for(Unit u : units)
-            if(u.name.equals("Destroyer"))
-                return true;
-        return false;
+    fun canAttack(): Boolean {
+        for (ship in ships) if (ship.name == "Destroyer") return true
+        return false
     }
 
-    public void colonize(Planet planet) {
+    fun colonize(planet: Planet) {
         // this really shouldn't happen
         //if(canColonize()==false) return;
 
         // Add colony
-        Colony colony = new Colony(this, planet);
-        colonies.add(colony);
+
+        val colony = Colony(this, planet)
+        colonies.add(colony)
 
         // Select a colony ship
         // TODO: remove closest ship and add travel time
-        Unit colonyShip = null;
-        Location l=null;
-        for(Unit u : units) {
-            if (u.name.equals("Colony Ship")) {
-                colonyShip = u;
-                l=u.location;
+        var colonyShip: Ship? = null
+        var l: Location? = null
+        for (ship in ships) {
+            if (ship.name == "Colony Ship") {
+                colonyShip = ship
+                l = ship.location
             }
         }
 
 
-
         // Remove ship from colony list
-        Colony colonyWithShip = null;
+        var colonyWithShip: Colony? = null
 
-        for(Colony c : colonies)
-            if(c!=null && c.planet.location == l)
-                colonyWithShip = c;
+        for (c in colonies) if (c != null && c.planet.location === l) colonyWithShip = c
 
         // Remove ship from global list
-        if(colonyShip!=null)
-            units.remove(colonyShip);
+        if (colonyShip != null) ships.remove(colonyShip)
 
         // Remove ship from colony list
-        if(colonyShip!=null && colonyWithShip!=null)
-            colonyWithShip.planet.units.remove(colonyShip);
+        if (colonyShip != null && colonyWithShip != null) colonyWithShip.planet.ships.remove(
+            colonyShip
+        )
     }
 
 
-    public void attack(Planet planet) {
+    fun attack(planet: Planet) {
         // this really shouldn't happen
         //if(canAttack()==false) return;
 
         // Remove colony from other player
-        Colony oldColony = planet.colony;
-        Player oldPlayer = oldColony.player;
-        oldPlayer.colonies.remove(oldColony);
+
+        val oldColony = planet.colony
+        val oldPlayer = oldColony.player
+        oldPlayer.colonies.remove(oldColony)
 
         // Add colony
-        Colony colony = new Colony(this, planet);
-        colonies.add(colony);
+        val colony = Colony(this, planet)
+        colonies.add(colony)
+    }
+
+    companion object {
+        var numPlayers: Int = 0
     }
 }

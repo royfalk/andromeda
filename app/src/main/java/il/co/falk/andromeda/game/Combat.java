@@ -9,11 +9,11 @@ import java.util.Random;
  * Created by roy on 1/2/15.
  */
 public class Combat {
-    ArrayList<Unit> attackers;
-    ArrayList<Unit> defenders;
+    ArrayList<Ship> attackers;
+    ArrayList<Ship> defenders;
     Location location;
 
-    public Combat(Location l, ArrayList<Unit> attackers, ArrayList<Unit> defenders) {
+    public Combat(Location l, ArrayList<Ship> attackers, ArrayList<Ship> defenders) {
         location = l;
         this.attackers = attackers;
         this.defenders = defenders;
@@ -26,9 +26,9 @@ public class Combat {
 
         while(attackers.size()>0 && defenders.size()>0) {
             Log.d("Andromeda", "A:" + attackers.size() + " D:" + defenders.size());
-            for(Unit u : attackers) {
+            for(Ship u : attackers) {
                 int index = r.nextInt(defenders.size());
-                Unit v = defenders.get(index);
+                Ship v = defenders.get(index);
                 int hp = v.hp;
                 u.attack(v);
                 int dmg = hp - v.hp;
@@ -38,9 +38,9 @@ public class Combat {
 
             }
 
-            for(Unit u : defenders) {
+            for(Ship u : defenders) {
                 int index = r.nextInt(attackers.size());
-                Unit v = attackers.get(index);
+                Ship v = attackers.get(index);
                 int hp = v.hp;
                 u.attack(v);
                 int dmg = hp - v.hp;

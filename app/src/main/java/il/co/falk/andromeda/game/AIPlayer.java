@@ -15,7 +15,9 @@ public class AIPlayer extends Player {
     public static final int STOP_DEFENCE_ON = 3;
     public static final int ATTACK_ON = 3;
 
-
+    AIPlayer(int index, String name) {
+       super(index, name);
+    }
 
     void play() {
         build();
